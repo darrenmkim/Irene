@@ -2,6 +2,7 @@
 
 module Irene.DomainType
 open System
+open Option
 
 type Ability = { 
   Id : int
@@ -56,14 +57,14 @@ type Leg = {
   PayFreqId : int
   DayConvId : int
   Notional : float
-  FixedRate : float }
+  FixedRate : float option }
  
 type DealType = {
   Id : int 
   Key : string 
   Name : string 
   DealClassId : int }
-
+   
  type Deal = {
   Id : int
   Name : string 
@@ -71,8 +72,17 @@ type DealType = {
   TradeDate : DateTime
   EffectiveDate : DateTime
   MatureDate : DateTime
-  TerminateDate : DateTime
- }
+  TerminateDate : DateTime }
+
+type RateInfo = {
+  Id : int
+  Name : string }
+
+type Rate = {
+  Id : int
+  Date : DateTime
+  RateInfoId : int
+  Fraction : float }
 
 type Tran = {
   Id : int

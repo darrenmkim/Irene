@@ -1,6 +1,6 @@
 [<AutoOpen>]
 
-module Irene.DomainVal
+module Irene.DomainSystem
 
 let abilities = [
     { Id = 131 ; Level = "Admin" ; Desc = "Can edit on system and db level." }
@@ -60,7 +60,15 @@ let dealtypes : DealType list = [
 
 let legtypes : LegType list = [
     { Id = 1 ; Name = "irs-fix" }
-    { Id = 2 ; Name = "irs-float" } ]
+    { Id = 2 ; Name = "irs-float" } 
+    // more to come
+    ]
+
+let rateinfo : RateInfo list = [
+    { Id = 1 ; Name = "LIBOR" }
+    { Id = 2 ; Name = "EURIBOR" } 
+    // more to come
+    ]
 
 let currencies : Currency list = [
     { Id = 8 ; Code = "ALL" ; Name = "Lek" }

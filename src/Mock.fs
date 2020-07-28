@@ -2,6 +2,22 @@ module Irene.Mock
 
 open System
 
+let mockRates : Rate list = [
+    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
+    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
+    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
+    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
+    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
+    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
+    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
+    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
+    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
+    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
+    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
+    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
+    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
+]
+
 let irs01 : Deal = {
     Id = 4
     Name = "IRS01" 
@@ -13,14 +29,27 @@ let irs01 : Deal = {
 }
 
 let irs01fixleg : Leg = {
-    Id = 10 ; 
+    Id = 11 ; 
     Name = "IRS01FIXLEG" ;
     LegTypeId = 3 ;
     DealId = 4 ; 
-    StanceId = 1 ;
-    CurrencyId = 840 ; 
-    PayFreqId = 43 ;
-    DayConvId = 1 ;
+    StanceId = 1 ; // this is payside leg
+    CurrencyId = 840 ; // usd
+    PayFreqId = 43 ; // semi-annual
+    DayConvId = 1 ; // default
     Notional = 1000000.0 ;
-    FixedRate = 0.02
+    FixedRate = Some 0.02
+}
+
+let irs01floatlet : Leg = {
+    Id = 12 ; 
+    Name = "IRS01FLOATLEG" ;
+    LegTypeId = 3 ;
+    DealId = 4 ; 
+    StanceId = 2 ; // this is receiveside leg
+    CurrencyId = 840 ; // usd
+    PayFreqId = 43 ; // semi-annual
+    DayConvId = 1 ; // default
+    Notional = 1000000.0 ;
+    FixedRate = None
 }

@@ -5,7 +5,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src/DomainType.fs" />
-    <Compile Include="src/DomainVal.fs" />
+    <Compile Include="src/AdaptDb.fs" />
+    <Compile Include="src/DomainSystem.fs" />
     <Compile Include="src/Mock.fs" />
     <Compile Include="src/Journalize.fs" />
     <Compile Include="src/Transact.fs" />
@@ -17,5 +18,6 @@
   <ItemGroup>
     <PackageReference Include="Giraffe" Version="4.1.*" />
     <PackageReference Include="TaskBuilder.fs" Version="2.1.*" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.113.1" />
   </ItemGroup>
 </Project>
