@@ -1,6 +1,7 @@
 [<AutoOpen>]
 
 module Irene.DomainType
+open System
 
 type Ability = { 
   Id : int
@@ -31,7 +32,52 @@ type DayConv = {
   Id : int
   Name : string }
 
-type DrvClass = {
+type DealClass = {
   Id : int
   Key : string
   Name : string }
+
+type PayFreq = {
+  Id : int
+  Name : string
+  NumMonths : int }
+
+type LegType = {
+  Id : int 
+  Name : string }
+
+type Leg = {
+  Id : int
+  Name : string
+  LegTypeId : int
+  DealId : int
+  StanceId : int 
+  CurrencyId : int 
+  PayFreqId : int
+  DayConvId : int
+  Notional : float
+  FixedRate : float }
+ 
+type DealType = {
+  Id : int 
+  Key : string 
+  Name : string 
+  DealClassId : int }
+
+ type Deal = {
+  Id : int
+  Name : string 
+  DealTypeId : int 
+  TradeDate : DateTime
+  EffectiveDate : DateTime
+  MatureDate : DateTime
+  TerminateDate : DateTime
+ }
+
+type Tran = {
+  Id : int
+  // Date : 
+  LegId : int
+  ActId : int
+  NumContracts : int
+  Amount : float }

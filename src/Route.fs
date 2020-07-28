@@ -10,6 +10,6 @@ let router : HttpFunc -> HttpContext -> HttpFuncResult =
         route "/abilities"  >=> json abilities
         route "/acts"       >=> json acts
         route "/dayconvs"   >=> json dayconvs
-        route "/drvclasses" >=> json drvclasses
+        route "/drvclasses" >=> json dealclasses
         route "/currencies" >=> json currencies
         route "/"           >=> text "hello darren" ]

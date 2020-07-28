@@ -27,9 +27,40 @@ let dayconvs : DayConv list = [
     { Id = 1 ; Name = "30/360" }
     { Id = 2 ; Name = "AC/360" } ]
 
-let drvclasses : DrvClass list = [
+let payfreqs : PayFreq list = [
+    { Id = 13 ; Name = "Continously" ; NumMonths = 0 }
+    { Id = 23 ; Name = "Monthly" ; NumMonths = 1 }
+    { Id = 33 ; Name = "Quarterly" ; NumMonths = 3 }
+    { Id = 43 ; Name = "Semi-Annually" ; NumMonths = 6 }
+    { Id = 53 ; Name = "Annually" ; NumMonths = 12 } ]
+
+let dealclasses : DealClass list = [
     { Id = 1 ; Key = "swp" ; Name = "Swap" }
     { Id = 2 ; Key = "opt" ; Name = "Option" } ]
+
+let dealtypes : DealType list = [
+    { Id = 1135 ; Key = "ftr" ; Name = "Future" ; DealClassId = 2 }
+    { Id = 1235 ; Key = "ftr" ; Name = "FX Forward" ; DealClassId = 2 }
+    { Id = 1335 ; Key = "ftr" ; Name = "Future" ; DealClassId = 2 }
+    { Id = 1435 ; Key = "ftr" ; Name = "Bond Forward" ; DealClassId = 2 }
+    { Id = 1535 ; Key = "ftr" ; Name = "Total Return Swap" ; DealClassId = 2 }
+    { Id = 1635 ; Key = "irs" ; Name = "Interest Rate Swap" ; DealClassId = 2 }
+    { Id = 1735 ; Key = "ftr" ; Name = "Currency Swap" ; DealClassId = 2 }
+    { Id = 1835 ; Key = "ftr" ; Name = "Call Option" ; DealClassId = 2 }
+    { Id = 1935 ; Key = "ftr" ; Name = "Put Option" ; DealClassId = 2 }
+    { Id = 2035 ; Key = "ftr" ; Name = "Corridor Option" ; DealClassId = 2 }
+    { Id = 2135 ; Key = "ftr" ; Name = "Interest Rate Cap" ; DealClassId = 2 }
+    { Id = 2235 ; Key = "ftr" ; Name = "Credit Default Swap" ; DealClassId = 2 }
+    { Id = 2335 ; Key = "ftr" ; Name = "Foreign Currency Spot" ; DealClassId = 2 }
+    { Id = 2435 ; Key = "ftr" ; Name = "Inflation Swap" ; DealClassId = 2 }
+    { Id = 2535 ; Key = "ftr" ; Name = "Treasury Lock" ; DealClassId = 2 }
+    { Id = 2635 ; Key = "ftr" ; Name = "Reverse Treasury Lock" ; DealClassId = 2 }
+    { Id = 2735 ; Key = "ftr" ; Name = "Swaption" ; DealClassId = 2 }
+    { Id = 2835 ; Key = "ftr" ; Name = "Commodity Swap" ; DealClassId = 2 } ]
+
+let legtypes : LegType list = [
+    { Id = 1 ; Name = "irs-fix" }
+    { Id = 2 ; Name = "irs-float" } ]
 
 let currencies : Currency list = [
     { Id = 8 ; Code = "ALL" ; Name = "Lek" }
@@ -211,4 +242,3 @@ let currencies : Currency list = [
     { Id = 994 ; Code = "XSU" ; Name = "Sucre" }
     { Id = 997 ; Code = "USN" ; Name = "US Dollar (Next day)" }
     { Id = 999 ; Code = "XXX" ; Name = "The codes assigned for transactions where no currency is involved" } ]
-
