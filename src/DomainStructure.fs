@@ -1,6 +1,6 @@
 [<AutoOpen>]
 
-module DomainStructure
+module Irene.DomainStructure
 
 let defaultAbilities = [
     { Id = 131 ; Level = "Admin" ; Desc = "Can edit on system and db level." }

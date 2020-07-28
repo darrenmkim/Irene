@@ -1,6 +1,6 @@
 [<AutoOpen>]
 
-module DomainType
+module Irene.DomainType
 
 type Ability = { 
   Id : int

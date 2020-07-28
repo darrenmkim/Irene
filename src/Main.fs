@@ -7,14 +7,14 @@ open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Giraffe
 
-let webApp =
+let router =
     choose [
         route "/ping"   >=> text "pong"
         route "/"       >=> text "hello darren" ]
 
 let configureApp (app : IApplicationBuilder) =
     // Add Giraffe to the ASP.NET Core pipeline
-    app.UseGiraffe webApp
+    app.UseGiraffe router
 
 let configureServices (services : IServiceCollection) =
     // Add Giraffe dependencies
