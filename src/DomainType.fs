@@ -76,7 +76,7 @@ type DealType = {
 
 type Tran = {
   Id : int
-  // Date : 
+  Date : DateTime
   LegId : int
   ActId : int
   NumContracts : int

@@ -14,7 +14,36 @@ let cylinderVolume radius length =
 
 *)
 
-let transactCashflows (leg : Leg) = 
+
+//let projectFinalCashflow (leg:Leg) (cutoff:DateTime) =
+//    match leg.StanceId with 
+ 
+let rec projectInterimCashflows 
+    (leg:Leg) 
+    (start:DateTime) 
+    (ending:DateTime)
+    (cutoff:DateTime) 
+    (numMonths:int) 
+    = 
+    if start > ending then []
+    else 
+        let newStart = start.AddMonths(numMonths)
+        let actId = 
+            match leg.StanceId with 
+            | 1 | 3 -> 4
+            | 2 | 4 -> 3
+            | _ -> 1
+        let t : Tran = { 
+            Id = 0 ; 
+            Date = newStart ; 
+            LegId = leg.Id ; 
+            ActId = actId ; 
+            NumContracts = 1 ; 
+            Amount = 333.10 }
+        t :: projectInterimCashflows leg newStart ending cutoff numMonths
+
+
+let transactCashflows (leg:Leg) = 
     let drvtype = "irs"
     match drvtype with 
     | "ftr" -> 33

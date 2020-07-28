@@ -1,26 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>Irene.App</AssemblyName>
-    <EnableDefaultContentItems>false</EnableDefaultContentItems>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Giraffe" Version="4.1.*" />
-    <PackageReference Include="TaskBuilder.fs" Version="2.1.*" />
-  </ItemGroup>
-
   <ItemGroup>
     <Compile Include="src/DomainType.fs" />
     <Compile Include="src/DomainVal.fs" />
     <Compile Include="src/Mock.fs" />
-    <Compile Include="src/Transact.fs" />
     <Compile Include="src/Journalize.fs" />
+    <Compile Include="src/Transact.fs" />
     <Compile Include="src/Route.fs" />
     <Compile Include="src/Configure.fs" />
     <Compile Include="src/Server.fs" />
     <Compile Include="src/Main.fs" />
   </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="Giraffe" Version="4.1.*" />
+    <PackageReference Include="TaskBuilder.fs" Version="2.1.*" />
+  </ItemGroup>
 </Project>
