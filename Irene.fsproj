@@ -13,7 +13,9 @@
 
   <ItemGroup>
     <Compile Include="src/DomainType.fs" />
-    <Compile Include="src/DomainStructure.fs" />
+    <Compile Include="src/DomainVal.fs" />
+    <Compile Include="src/Route.fs" />
+    <Compile Include="src/Configure.fs" />
     <Compile Include="src/Main.fs" />
   </ItemGroup>
 
