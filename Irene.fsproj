@@ -6,12 +6,13 @@
   <ItemGroup>
     <Compile Include="src/DomainType.fs" />
     <Compile Include="src/AdaptDb.fs" />
-    <Compile Include="src/DomainSystem.fs" />
+    <Compile Include="src/DomainSys.fs" />
     <Compile Include="src/Mock.fs" />
-    <Compile Include="src/Journalize.fs" />
-    <Compile Include="src/Transact.fs" />
+    <Compile Include="src/TranCash.fs" />
+    <Compile Include="src/Journal.fs" />
+    <Compile Include="src/TranVal.fs" />
     <Compile Include="src/Route.fs" />
-    <Compile Include="src/Configure.fs" />
+    <Compile Include="src/Config.fs" />
     <Compile Include="src/Server.fs" />
     <Compile Include="src/Main.fs" />
   </ItemGroup>

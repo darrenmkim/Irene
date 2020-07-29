@@ -1,6 +1,6 @@
 [<AutoOpen>]
 
-module Irene.DomainSystem
+module Irene.DomainSys
 
 let abilities = [
     { Id = 131 ; Level = "Admin" ; Desc = "Can edit on system and db level." }

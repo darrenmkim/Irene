@@ -1,4 +1,4 @@
-module Irene.Configure
+module Irene.Config
 
 open Microsoft.AspNetCore.Builder
 open Microsoft.Extensions.DependencyInjection

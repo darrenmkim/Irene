@@ -2,7 +2,6 @@
 
 module Irene.DomainType
 open System
-open Option
 
 type Ability = { 
   Id : int
