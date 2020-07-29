@@ -2,7 +2,7 @@ module Irene.Server
 
 open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.Hosting
-open Irene.Configure
+open Irene.Config
 
 let main _ =
     Host.CreateDefaultBuilder()
