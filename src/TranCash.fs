@@ -36,10 +36,37 @@ let rec projectInterimCashflows
 
 // initial
 
-let transactInitialCashflow (leg:Leg) =
-    // leg.DealId
-    32
+
+// transactInterestPayments
+let rec transactIrsInterestPayments 
+    (legid:int) 
+    (notional:float) 
+    (freqmonths:int) 
+    (rate:float) 
+    (mature:DateTime) 
+    (start:DateTime) =
+    if (start >= mature) then []
+    else 
+        start.AddMonths(freqmonths) :: 
+        transactIrsInterestPayments legid notional freqmonths rate mature (start.AddMonths(freqmonths))
 
 
-// transactInterimCashflows
-// transactFinalCashflows
+
+    (*
+        // let interestRate = List.filter (fun r -> r.Date = DateTime(2022, 1, 3)) mockRates
+        
+
+        // let interest = notional * (rate / 100.0) * (float (12 / freqmonths))
+        
+        (*
+        let t : Tran = { 
+            Id = 0 ; 
+            Date = newStart ; 
+            LegId = legid ; 
+            ActId = 4 ; 
+            NumContracts = 1 ; 
+            Amount = interest }
+        *)
+        // interest :: transactIrsInterestPayments legid notional freqmonths rate mature newStart
+
+*)

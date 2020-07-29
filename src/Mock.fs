@@ -2,30 +2,34 @@ module Irene.Mock
 
 open System
 
-let mockRates : Rate list = [
-    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
-    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
-    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
-    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
-    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
-    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
-    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
-    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
-    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
-    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
-    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
-    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
-    { Id = 1 ; Date = DateTime(2020, 2, 1) ; RateInfoId = 1 ; Fraction = 1.5 }
+let mockRates : RateRecord list = [
+    { Id = 1 ; Date = DateTime(2020, 1, 1) ; RateInfoId = 1 ; Percentage = 1.5 } ;
+    { Id = 1 ; Date = DateTime(2020, 1, 3) ; RateInfoId = 1 ; Percentage = 2.0 } ;
+    { Id = 1 ; Date = DateTime(2020, 7, 3) ; RateInfoId = 1 ; Percentage = 2.5 } ;
+    { Id = 1 ; Date = DateTime(2021, 1, 3) ; RateInfoId = 1 ; Percentage = 3.0 } ;
+    { Id = 1 ; Date = DateTime(2021, 7, 3) ; RateInfoId = 1 ; Percentage = 1.5 } ;
+    { Id = 1 ; Date = DateTime(2022, 1, 3) ; RateInfoId = 1 ; Percentage = 2.0 } ;
+    { Id = 1 ; Date = DateTime(2022, 7, 3) ; RateInfoId = 1 ; Percentage = 2.5 } ;
+    { Id = 1 ; Date = DateTime(2023, 1, 3) ; RateInfoId = 1 ; Percentage = 3.0 } ;
+    { Id = 1 ; Date = DateTime(2023, 7, 3) ; RateInfoId = 1 ; Percentage = 2.0 } ;
+    { Id = 1 ; Date = DateTime(2024, 1, 3) ; RateInfoId = 1 ; Percentage = 2.5 } ;
+    { Id = 1 ; Date = DateTime(2024, 7, 3) ; RateInfoId = 1 ; Percentage = 1.5 } ;
+    { Id = 1 ; Date = DateTime(2025, 1, 3) ; RateInfoId = 1 ; Percentage = 2.0 } ;
+    { Id = 1 ; Date = DateTime(2025, 7, 3) ; RateInfoId = 1 ; Percentage = 2.5 } ;
+    { Id = 1 ; Date = DateTime(2026, 1, 3) ; RateInfoId = 1 ; Percentage = 1.5 } ;
+    { Id = 1 ; Date = DateTime(2026, 7, 3) ; RateInfoId = 1 ; Percentage = 2.0 } ;
+    { Id = 1 ; Date = DateTime(2027, 1, 3) ; RateInfoId = 1 ; Percentage = 2.5 } ;
+    { Id = 1 ; Date = DateTime(2027, 7, 3) ; RateInfoId = 1 ; Percentage = 3.0 } ;
 ]
 
 let irs01 : Deal = {
     Id = 4
     Name = "IRS01" 
     DealTypeId = 1635
-    TradeDate = DateTime(2019,10,13)
-    EffectiveDate = DateTime(2019,10,15)
-    MatureDate = DateTime(2029,10,15)
-    TerminateDate = DateTime(2029,10,15)
+    TradeDate = DateTime(2020,1,1)
+    EffectiveDate = DateTime(2020,1,3)
+    MatureDate = DateTime(2025,1,3)
+    TerminateDate = DateTime(2025,1,3)
 }
 
 let irs01fixleg : Leg = {

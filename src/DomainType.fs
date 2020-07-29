@@ -77,11 +77,11 @@ type RateInfo = {
   Id : int
   Name : string }
 
-type Rate = {
+type RateRecord = {
   Id : int
   Date : DateTime
   RateInfoId : int
-  Fraction : float }
+  Percentage : float }
 
 type Tran = {
   Id : int
