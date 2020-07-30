@@ -1,72 +1,69 @@
 module Irene.TranCash
+
 open System
-open Mock
-
-//let projectFinalCashflow (leg:Leg) (cutoff:DateTime) =
-//    match leg.StanceId with 
- 
-(*
-let rec projectInterimCashflows 
-    (deal:Deal)
-    (leg:Leg) 
-    (cutoff:DateTime) 
-    = 
-    let start = deal.EffectiveDate
-    let ending = deal.MatureDate
-    let freqmonths = leg.PayFreqId
-    if start > ending then []
-    else
-        //let monthsOfGap = (List.filter (fun l -> l.Id = 43 ) payfreqs).NumMonths
-        let newStart = start.AddMonths(freqmonths)
-        let actId = 
-            match leg.StanceId with 
-            | 1 | 3 -> 4
-            | 2 | 4 -> 3
-            | _ -> 1
-        let t : Tran = { 
-            Id = 0 ; 
-            Date = newStart ; 
-            LegId = leg.Id ; 
-            ActId = actId ; 
-            NumContracts = 1 ; 
-            Amount = 333.10 }
-        t :: projectInterimCashflows deal  newStart ending cutoff numMonths
-*)
-
-
-// initial
-
+open Irene.Mock
 
 // transactInterestPayments
-let rec transactIrsInterestPayments 
-    (legid:int) 
+let rec tranIrsFixedInterestPayments 
     (notional:float) 
-    (freqmonths:int) 
+    (months:int) 
     (rate:float) 
     (mature:DateTime) 
     (start:DateTime) =
     if (start >= mature) then []
-    else 
-        start.AddMonths(freqmonths) :: 
-        transactIrsInterestPayments legid notional freqmonths rate mature (start.AddMonths(freqmonths))
+    else
+        let interest = notional * (rate / 100.0) * (float months / 12.0)
+        let formula = sprintf "%.0f * (%.4f/100) * (%d/12) = %.2f" notional rate months interest
+        let newStart = start.AddMonths(months)
+        (newStart, interest, formula) :: 
+        tranIrsFixedInterestPayments 
+            notional 
+            months 
+            rate 
+            mature 
+            newStart
 
+let extractRateFromRateRecord rateRecord =
+    rateRecord.Percentage
 
+let findRateRecordFromRateRecords rateList date code =
+    rateList
+    |> List.find 
+        (fun (item:RateRecord) -> 
+            item.Date = date && 
+            item.RateCodeId = code)
 
-    (*
-        // let interestRate = List.filter (fun r -> r.Date = DateTime(2022, 1, 3)) mockRates
-        
+let rec tranIrsFloatInterestPayments 
+    (notional:float) 
+    (months:int) 
+    (mature:DateTime) 
+    (start:DateTime) =
+    if (start >= mature) then []
+    else
+        let rate = 
+            findRateRecordFromRateRecords mockRates start 1 
+            |> extractRateFromRateRecord 
+        let interest = notional * (rate / 100.0) * (float months / 12.0)
+        let formula = sprintf "%.0f * (%.4f/100) * (%d/12) = %.2f" notional rate months interest
+        let newStart = start.AddMonths(months)
+        (newStart, interest, formula) :: 
+        tranIrsFloatInterestPayments 
+            notional 
+            months 
+            mature 
+            newStart
 
-        // let interest = notional * (rate / 100.0) * (float (12 / freqmonths))
-        
-        (*
-        let t : Tran = { 
-            Id = 0 ; 
-            Date = newStart ; 
-            LegId = legid ; 
-            ActId = 4 ; 
-            NumContracts = 1 ; 
-            Amount = interest }
-        *)
-        // interest :: transactIrsInterestPayments legid notional freqmonths rate mature newStart
+let testFixed = 
+    tranIrsFixedInterestPayments 
+        1000000.0 
+        6 
+        2.0 
+        (DateTime(2025,1,3)) 
+        (DateTime(2020,1,3)) 
 
-*)
+let testFloat = 
+    tranIrsFloatInterestPayments 
+        1000000.0 
+        6 
+        (DateTime(2025,1,3)) 
+        (DateTime(2020,1,3)) 

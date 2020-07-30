@@ -2,11 +2,11 @@
 
 module Irene.DomainSys
 
-let abilities = [
-    { Id = 131 ; Level = "Admin" ; Desc = "Can edit on system and db level." }
-    { Id = 231 ; Level = "Approver" ; Desc = "Can approve entries." }
-    { Id = 331 ; Level = "Preparer" ; Desc = "Can create and book entries." }
-    { Id = 431 ; Level = "Viewer" ; Desc = "Can view." } ]
+let abilities : Ability list = [
+    { Id = 15 ; Level = "Admin" ; Desc = "Can edit on system and db level." }
+    { Id = 25 ; Level = "Approver" ; Desc = "Can approve entries." }
+    { Id = 35 ; Level = "Preparer" ; Desc = "Can create and book entries." }
+    { Id = 45 ; Level = "Viewer" ; Desc = "Can view." } ]
 
 let acts : Act list = [
     { Id = 1 ; Key = "contract" }
@@ -64,9 +64,9 @@ let legtypes : LegType list = [
     // more to come
     ]
 
-let rateinfo : RateInfo list = [
-    { Id = 1 ; Name = "LIBOR" }
-    { Id = 2 ; Name = "EURIBOR" } 
+let rateCode : RateCode list = [
+    { Id = 1 ; Code = "LIBOR" }
+    { Id = 2 ; Code = "EURIBOR" } 
     // more to come
     ]
 

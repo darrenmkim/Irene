@@ -73,14 +73,14 @@ type DealType = {
   MatureDate : DateTime
   TerminateDate : DateTime }
 
-type RateInfo = {
+type RateCode = {
   Id : int
-  Name : string }
+  Code : string }
 
 type RateRecord = {
-  Id : int
+  Id : int option
   Date : DateTime
-  RateInfoId : int
+  RateCodeId : int
   Percentage : float }
 
 type Tran = {
