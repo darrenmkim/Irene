@@ -1,6 +1,7 @@
 module Irene.TranVal
 
+open System
 
 
-
-// transactMonthlyValues
+let tranIrsFixedMonthlyValuations = 
+    33 // to be expanded
