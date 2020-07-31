@@ -1,76 +1,108 @@
 [<AutoOpen>]
+module Irene.Domain
 
-module Irene.DomainSys
+open System
+open System.Collections.Generic
 
-let abilities : Ability list = [
-    { Id = 15 ; Level = "Admin" ; Desc = "Can edit on system and db level." }
-    { Id = 25 ; Level = "Approver" ; Desc = "Can approve entries." }
-    { Id = 35 ; Level = "Preparer" ; Desc = "Can create and book entries." }
-    { Id = 45 ; Level = "Viewer" ; Desc = "Can view." } ]
+type Ability = Administrator | Approver | Preparer | Viewer
 
-let acts : Act list = [
-    { Id = 1 ; Key = "contract" }
-    { Id = 2 ; Key = "effect" }
-    { Id = 3 ; Key = "receive" }
-    { Id = 4 ; Key = "pay" }
-    { Id = 5 ; Key = "revalue" }
-    { Id = 6 ; Key = "mature" }
-    { Id = 7 ; Key = "terminate" } ]
+type DayConv = DC'AC360 | DC'30360
 
-let stances : Stance list = [
-    { Id = 1 ; Key = "payer" }
-    { Id = 2 ; Key = "receiver" }
-    { Id = 3 ; Key = "buyer" }
-    { Id = 4 ; Key = "seller" } ]
+type Event
+  = Contract 
+  | Effect 
+  | Receive 
+  | Pay
+  | Valuate 
+  | Terminate 
+  | Mature 
 
-let dayconvs : DayConv list = [
-    { Id = 1 ; Name = "30/360" }
-    { Id = 2 ; Name = "AC/360" } ]
+type Stance = Payer | Receiver | Buyer | Seller
 
-let payfreqs : PayFreq list = [
-    { Id = 13 ; Name = "Continously" ; NumMonths = 0 }
-    { Id = 23 ; Name = "Monthly" ; NumMonths = 1 }
-    { Id = 33 ; Name = "Quarterly" ; NumMonths = 3 }
-    { Id = 43 ; Name = "Semi-Annually" ; NumMonths = 6 }
-    { Id = 53 ; Name = "Annually" ; NumMonths = 12 } ]
+type PayFreq
+  = Monthly
+  | Quarterly
+  | SemiAnnually
+  | Annually
+  | BiAnnually
 
-let dealclasses : DealClass list = [
-    { Id = 1 ; Key = "swp" ; Name = "Swap" }
-    { Id = 2 ; Key = "opt" ; Name = "Option" } ]
+type NumOfMonths = int
 
-let dealtypes : DealType list = [
-    { Id = 1135 ; Key = "ftr" ; Name = "Future" ; DealClassId = 2 }
-    { Id = 1235 ; Key = "ftr" ; Name = "FX Forward" ; DealClassId = 2 }
-    { Id = 1335 ; Key = "ftr" ; Name = "Future" ; DealClassId = 2 }
-    { Id = 1435 ; Key = "ftr" ; Name = "Bond Forward" ; DealClassId = 2 }
-    { Id = 1535 ; Key = "ftr" ; Name = "Total Return Swap" ; DealClassId = 2 }
-    { Id = 1635 ; Key = "irs" ; Name = "Interest Rate Swap" ; DealClassId = 2 }
-    { Id = 1735 ; Key = "ftr" ; Name = "Currency Swap" ; DealClassId = 2 }
-    { Id = 1835 ; Key = "ftr" ; Name = "Call Option" ; DealClassId = 2 }
-    { Id = 1935 ; Key = "ftr" ; Name = "Put Option" ; DealClassId = 2 }
-    { Id = 2035 ; Key = "ftr" ; Name = "Corridor Option" ; DealClassId = 2 }
-    { Id = 2135 ; Key = "ftr" ; Name = "Interest Rate Cap" ; DealClassId = 2 }
-    { Id = 2235 ; Key = "ftr" ; Name = "Credit Default Swap" ; DealClassId = 2 }
-    { Id = 2335 ; Key = "ftr" ; Name = "Foreign Currency Spot" ; DealClassId = 2 }
-    { Id = 2435 ; Key = "ftr" ; Name = "Inflation Swap" ; DealClassId = 2 }
-    { Id = 2535 ; Key = "ftr" ; Name = "Treasury Lock" ; DealClassId = 2 }
-    { Id = 2635 ; Key = "ftr" ; Name = "Reverse Treasury Lock" ; DealClassId = 2 }
-    { Id = 2735 ; Key = "ftr" ; Name = "Swaption" ; DealClassId = 2 }
-    { Id = 2835 ; Key = "ftr" ; Name = "Commodity Swap" ; DealClassId = 2 } ]
+let PayFreqVal 
+  : IDictionary<PayFreq,NumOfMonths> 
+  = dict [ 
+  Monthly, 1 ; 
+  Quarterly, 3 ; 
+  SemiAnnually, 6 ; 
+  Annually, 12 ; 
+  BiAnnually, 24 ]
 
-let legtypes : LegType list = [
-    { Id = 1 ; Name = "irs-fix" }
-    { Id = 2 ; Name = "irs-float" } 
-    // more to come
-    ]
+type Currency = USD | EUR
 
-let rateCode : RateCode list = [
-    { Id = 1 ; Code = "LIBOR" }
-    { Id = 2 ; Code = "EURIBOR" } 
-    // more to come
-    ]
+type LegType 
+  = IrsFixed 
+  | IrsFloat
 
-let currencies : Currency list = [
+type Leg = {
+  Id : int option ;
+  LegType : LegType ;
+  Stance : Stance ; 
+  Currency : Currency ; 
+  PayFreq : PayFreq ;
+  DayConv : DayConv ;
+  Notional : float ;
+  FixedRate : float option }
+
+type RateCode = LIBOR | EURIBOR
+
+type DealClass = SWP | OPT 
+
+type DealType = IRS | CRS | FTR
+
+type Deal = {
+  Id : int option
+  Name : string 
+  DealType : DealType
+  LegPay : Leg option
+  LegReceive : Leg option
+  TradeDate : DateTime
+  EffectiveDate : DateTime
+  MatureDate : DateTime
+  TerminateDate : DateTime option
+}
+
+type RateRecord = {
+  Id : int option
+  Date : DateTime
+  RateCodeId : int
+  Percentage : float }
+
+type Chart = {
+  Id : int option
+  Name : string
+  Activity : string
+  Account : int
+  DocNumber : int }
+
+type Tran = {
+  Id : int option
+  Date : DateTime
+  Leg : Leg
+  Event : Event
+  NumContracts : int
+  Amount : float
+  Annotation : string }
+
+// proof of concept
+type Tester 
+  = Greet of string
+  | Speech of string list 
+  | Close of Tran
+
+
+
+(*
+  let currencies : Currency list = [
     { Id = 8 ; Code = "ALL" ; Name = "Lek" }
     { Id = 12 ; Code = "DZD" ; Name = "Algerian Dinar" }
     { Id = 32 ; Code = "ARS" ; Name = "Argentine Peso" }
@@ -181,7 +213,7 @@ let currencies : Currency list = [
     { Id = 756 ; Code = "CHF" ; Name = "Swiss Franc" }
     { Id = 760 ; Code = "SYP" ; Name = "Syrian Pound" }
     { Id = 764 ; Code = "THB" ; Name = "Baht" }
-    { Id = 776 ; Code = "TOP" ; Name = "Pa’anga" }
+    { Id = 776 ; Code = "TOP" ; Name = "Paâ€™anga" }
     { Id = 780 ; Code = "TTD" ; Name = "Trinidad and Tobago Dollar" }
     { Id = 784 ; Code = "AED" ; Name = "UAE Dirham" }
     { Id = 788 ; Code = "TND" ; Name = "Tunisian Dinar" }
@@ -197,7 +229,7 @@ let currencies : Currency list = [
     { Id = 886 ; Code = "YER" ; Name = "Yemeni Rial" }
     { Id = 901 ; Code = "TWD" ; Name = "New Taiwan Dollar" }
     { Id = 927 ; Code = "UYW" ; Name = "Unidad Previsional" }
-    { Id = 928 ; Code = "VES" ; Name = "Bolívar Soberano" }
+    { Id = 928 ; Code = "VES" ; Name = "BolÃ­var Soberano" }
     { Id = 929 ; Code = "MRU" ; Name = "Ouguiya" }
     { Id = 930 ; Code = "STN" ; Name = "Dobra" }
     { Id = 931 ; Code = "CUC" ; Name = "Peso Convertible" }
@@ -250,3 +282,32 @@ let currencies : Currency list = [
     { Id = 994 ; Code = "XSU" ; Name = "Sucre" }
     { Id = 997 ; Code = "USN" ; Name = "US Dollar (Next day)" }
     { Id = 999 ; Code = "XXX" ; Name = "The codes assigned for transactions where no currency is involved" } ]
+
+
+
+
+
+let dealtypes : DealType list = [
+    { Id = 1135 ; Key = "ftr" ; Name = "Future" ; DealClassId = 2 }
+    { Id = 1235 ; Key = "ftr" ; Name = "FX Forward" ; DealClassId = 2 }
+    { Id = 1335 ; Key = "ftr" ; Name = "Future" ; DealClassId = 2 }
+    { Id = 1435 ; Key = "ftr" ; Name = "Bond Forward" ; DealClassId = 2 }
+    { Id = 1535 ; Key = "ftr" ; Name = "Total Return Swap" ; DealClassId = 2 }
+    { Id = 1635 ; Key = "irs" ; Name = "Interest Rate Swap" ; DealClassId = 2 }
+    { Id = 1735 ; Key = "ftr" ; Name = "Currency Swap" ; DealClassId = 2 }
+    { Id = 1835 ; Key = "ftr" ; Name = "Call Option" ; DealClassId = 2 }
+    { Id = 1935 ; Key = "ftr" ; Name = "Put Option" ; DealClassId = 2 }
+    { Id = 2035 ; Key = "ftr" ; Name = "Corridor Option" ; DealClassId = 2 }
+    { Id = 2135 ; Key = "ftr" ; Name = "Interest Rate Cap" ; DealClassId = 2 }
+    { Id = 2235 ; Key = "ftr" ; Name = "Credit Default Swap" ; DealClassId = 2 }
+    { Id = 2335 ; Key = "ftr" ; Name = "Foreign Currency Spot" ; DealClassId = 2 }
+    { Id = 2435 ; Key = "ftr" ; Name = "Inflation Swap" ; DealClassId = 2 }
+    { Id = 2535 ; Key = "ftr" ; Name = "Treasury Lock" ; DealClassId = 2 }
+    { Id = 2635 ; Key = "ftr" ; Name = "Reverse Treasury Lock" ; DealClassId = 2 }
+    { Id = 2735 ; Key = "ftr" ; Name = "Swaption" ; DealClassId = 2 }
+    { Id = 2835 ; Key = "ftr" ; Name = "Commodity Swap" ; DealClassId = 2 } ]
+
+
+
+
+    *)

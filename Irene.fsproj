@@ -4,9 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="src/DomainType.fs" />
+    <Compile Include="src/Domain.fs" />
     <Compile Include="src/AdaptDb.fs" />
-    <Compile Include="src/DomainSys.fs" />
     <Compile Include="src/Mock.fs" />
     <Compile Include="src/TranCash.fs" />
     <Compile Include="src/Journal.fs" />

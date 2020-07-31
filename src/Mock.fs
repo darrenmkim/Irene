@@ -22,38 +22,48 @@ let mockRates : RateRecord list = [
     { Id = None ; Date = DateTime(2027, 7, 3) ; RateCodeId = 1 ; Percentage = 3.0 } ;
 ]
 
-let irs01 : Deal = {
-    Id = 4
-    Name = "IRS01" 
-    DealTypeId = 1635
-    TradeDate = DateTime(2020,1,1)
-    EffectiveDate = DateTime(2020,1,3)
-    MatureDate = DateTime(2025,1,3)
-    TerminateDate = DateTime(2025,1,3)
+let irs01fixleg : Leg =  {
+    Id = Some 11 ;
+    LegType = IrsFixed ; 
+    Stance = Stance.Payer ; // this is payside leg
+    Currency = Currency.USD ; // usd
+    PayFreq = PayFreq.SemiAnnually ; // semi-annual
+    DayConv = DayConv.DC'AC360 ; // default
+    Notional = 1000000.0 ;
+    FixedRate = Some 2.0
 }
 
-let irs01fixleg : Leg = {
-    Id = 11 ; 
-    Name = "IRS01FIXLEG" ;
-    LegTypeId = 3 ;
-    DealId = 4 ; 
-    StanceId = 1 ; // this is payside leg
-    CurrencyId = 840 ; // usd
-    PayFreqId = 43 ; // semi-annual
-    DayConvId = 1 ; // default
+let irs01floatlet : Leg =  {
+    Id = Some 12 ; 
+    LegType = IrsFloat ;
+    Stance = Stance.Payer ;
+    Currency = Currency.USD ; // usd
+    PayFreq = PayFreq.SemiAnnually ; // semi-annua
+    DayConv = DayConv.DC'AC360 ; 
     Notional = 1000000.0 ;
-    FixedRate = Some 0.02
+    FixedRate = None 
 }
 
-let irs01floatlet : Leg = {
-    Id = 12 ; 
-    Name = "IRS01FLOATLEG" ;
-    LegTypeId = 3 ;
-    DealId = 4 ; 
-    StanceId = 2 ; // this is receiveside leg
-    CurrencyId = 840 ; // usd
-    PayFreqId = 43 ; // semi-annual
-    DayConvId = 1 ; // default
-    Notional = 1000000.0 ;
-    FixedRate = None
-}
+let dealTableMockItems : Deal list  = [
+    { Id = Some 4 ;
+         Name = "IRS01" ;
+        DealType = IRS ;
+        LegPay =  Some irs01floatlet ; 
+        LegReceive = Some irs01fixleg ; 
+        TradeDate = DateTime(2020,1,1) ;
+        EffectiveDate = DateTime(2020,1,3) ;
+        MatureDate = DateTime(2025,1,3) ;
+        TerminateDate = None
+    }; 
+      { Id = Some 4 ;
+        Name = "IRS02" ;
+        DealType = IRS ;
+        LegPay =  Some irs01floatlet ; 
+        LegReceive = Some irs01fixleg ; 
+        TradeDate = DateTime(2020,1,1) ;
+        EffectiveDate = DateTime(2020,1,3) ;
+        MatureDate = DateTime(2025,1,3) ;
+        TerminateDate = None
+    }; 
+]
+

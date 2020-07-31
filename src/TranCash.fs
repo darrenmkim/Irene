@@ -15,61 +15,75 @@ let findRateRecordFromRateRecords rateList date code =
 
 // transactInterestPayments
 let rec tranIrsFixedInterestPayments 
-    (notional:float) 
-    (months:int) 
-    (rate:float) 
-    (mature:DateTime) 
-    (start:DateTime) =
-    if (start >= mature) then []
+    (deal:Deal) (leg:Leg) (start:DateTime) =
+    if (start >= deal.MatureDate) then []
     else
+        let numOfMonths = PayFreqVal.Item(leg.PayFreq)
         let interest = 
-            notional * (rate / 100.0) * (float months / 12.0)
-        let formula = 
+            leg.Notional * (leg.FixedRate.Value / 100.0) * (float numOfMonths / 12.0)
+        let formula : string = 
             sprintf "%.0f * (%.4f/100) * (%d/12) = %.2f" 
-                notional rate months interest
-        let newStart = start.AddMonths(months)
-        (newStart, interest, formula) :: 
-        tranIrsFixedInterestPayments 
-            notional 
-            months 
-            rate 
-            mature 
-            newStart
+                leg.Notional leg.FixedRate.Value numOfMonths interest
+        let newStart = start.AddMonths(numOfMonths)
+        let tran : Tran = {
+            Id = None ; 
+            Date = start ; 
+            Leg = leg ; 
+            Event = Pay ; 
+            NumContracts = 1 ; 
+            Amount = interest ; 
+            Annotation = formula }
+        tran :: tranIrsFixedInterestPayments deal leg newStart
 
+(*
 let rec tranIrsFloatInterestPayments 
-    (notional:float) 
-    (months:int) 
-    (mature:DateTime) 
-    (start:DateTime) =
-    if (start >= mature) then []
+    (deal:Deal) (leg:Leg) (start:DateTime) =
+    if (start >= deal.MatureDate) then []
     else
-        let rate = 
-            findRateRecordFromRateRecords mockRates start 1 
-            |> extractRateFromRateRecord 
+        let numOfMonths = PayFreqVal.Item(leg.PayFreq)
         let interest = 
-            notional * (rate / 100.0) * (float months / 12.0)
+            leg.Notional * (leg.FixedRate.Value / 100.0) * (float numOfMonths / 12.0)
         let formula = 
             sprintf "%.0f * (%.4f/100) * (%d/12) = %.2f" 
-                notional rate months interest
-        let newStart = start.AddMonths(months)
-        (newStart, interest, formula) :: 
-        tranIrsFloatInterestPayments 
-            notional 
-            months 
-            mature 
-            newStart
+                leg.Notional leg.FixedRate.Value numOfMonths interest
+        let newStart = start.AddMonths(numOfMonths)
+        let tran : Tran = {
+            Id = None ; 
+            Date = start ; 
+            Leg = leg ; 
+            Event = Pay ; 
+            NumContracts = 1 ; 
+            Amount = interest ;
+            Annotation = formula }
+        tran :: tranIrsFixedInterestPayments deal leg newStart
+*)
 
-let testFixed = 
-    tranIrsFixedInterestPayments 
-        1000000.0 
-        6 
-        2.0 
-        (DateTime(2025,1,3)) 
-        (DateTime(2020,1,3)) 
+let routeLegsToProcess 
+    (deal:Deal) (leg:Leg option) (systemDate:DateTime)
+    = 
+    match leg with 
+    | None -> []
+    | Some leg -> 
+        match leg.LegType with 
+        | IrsFixed -> tranIrsFixedInterestPayments deal leg systemDate
+        | IrsFloat -> tranIrsFixedInterestPayments deal leg systemDate
 
-let testFloat = 
-    tranIrsFloatInterestPayments 
-        1000000.0
-        6
-        (DateTime(2025,1,3))
-        (DateTime(2020,1,3))
+let transactInterimPaymentsGate 
+    (deal:Deal) (systemDate:DateTime)
+    =
+    routeLegsToProcess deal deal.LegReceive systemDate
+
+let testerdeal = { 
+    Id = Some 4 ;
+    Name = "IRS01" ;
+    DealType = IRS ;
+    LegPay =  Some irs01floatlet ; 
+    LegReceive = Some irs01fixleg ; 
+    TradeDate = DateTime(2020,1,1) ;
+    EffectiveDate = DateTime(2020,1,3) ;
+    MatureDate = DateTime(2025,1,3) ;
+    TerminateDate = None }
+
+let testing2 = routeLegsToProcess testerdeal (Some irs01fixleg) (DateTime(2020,3,1))
+
+let testing = transactInterimPaymentsGate testerdeal (DateTime(2020,3,1))
