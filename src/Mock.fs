@@ -25,10 +25,10 @@ let mockRates : RateRecord list = [
 let irs01fixleg : Leg =  {
     Id = Some 11 ;
     LegType = IrsFixed ; 
-    Stance = Stance.Payer ; // this is payside leg
-    Currency = Currency.USD ; // usd
-    PayFreq = PayFreq.SemiAnnually ; // semi-annual
-    DayConv = DayConv.DC'AC360 ; // default
+    Stance = Payer ; // this is payside leg
+    Currency = USD ; // usd
+    PayFreq = SemiAnnually ; // semi-annual
+    DayConv = DC'AC360 ; // default
     Notional = 1000000.0 ;
     FixedRate = Some 2.0
 }
@@ -36,10 +36,10 @@ let irs01fixleg : Leg =  {
 let irs01floatlet : Leg =  {
     Id = Some 12 ; 
     LegType = IrsFloat ;
-    Stance = Stance.Payer ;
-    Currency = Currency.USD ; // usd
-    PayFreq = PayFreq.SemiAnnually ; // semi-annua
-    DayConv = DayConv.DC'AC360 ; 
+    Stance = Payer ;
+    Currency = USD ; // usd
+    PayFreq = SemiAnnually ; // semi-annua
+    DayConv = DC'AC360 ; 
     Notional = 1000000.0 ;
     FixedRate = None 
 }
@@ -66,4 +66,22 @@ let dealTableMockItems : Deal list  = [
         TerminateDate = None
     }; 
 ]
+
+let testerdeal2 = { 
+    Id = Some 4 ;
+    Name = "IRS01" ;
+    DealType = IRS ;
+    LegPay =  Some irs01floatlet ; 
+    LegReceive = Some irs01fixleg ; 
+    TradeDate = DateTime(2020,1,1) ;
+    EffectiveDate = DateTime(2020,1,3) ;
+    MatureDate = DateTime(2025,1,3) ;
+    TerminateDate = None }
+
+let roll1 : RollOrder = {
+    Id = Some 1 ;
+    RollOrderType = Populate ; 
+    StartDate = Some (DateTime(2020,3,1)) ; 
+    TargetDate = DateTime(2020,7,31) }
+
 

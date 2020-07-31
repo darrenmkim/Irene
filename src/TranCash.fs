@@ -15,7 +15,7 @@ let findRateRecordFromRateRecords rateList date code =
 
 // transactInterestPayments
 let rec tranIrsFixedInterestPayments 
-    (deal:Deal) (leg:Leg) (start:DateTime) =
+    (roll:RollOrder) (deal:Deal) (leg:Leg) (start:DateTime) =
     if (start >= deal.MatureDate) then []
     else
         let numOfMonths = PayFreqVal.Item(leg.PayFreq)
@@ -32,8 +32,9 @@ let rec tranIrsFixedInterestPayments
             Event = Pay ; 
             NumContracts = 1 ; 
             Amount = interest ; 
-            Annotation = formula }
-        tran :: tranIrsFixedInterestPayments deal leg newStart
+            Annotation = formula ;
+            RollOrder =  roll }
+        tran :: tranIrsFixedInterestPayments roll deal leg newStart
 
 (*
 let rec tranIrsFloatInterestPayments 
@@ -59,19 +60,19 @@ let rec tranIrsFloatInterestPayments
 *)
 
 let routeLegsToProcess 
-    (deal:Deal) (leg:Leg option) (systemDate:DateTime)
+    (roll:RollOrder) (deal:Deal) (leg:Leg option) (systemDate:DateTime)
     = 
     match leg with 
     | None -> []
     | Some leg -> 
         match leg.LegType with 
-        | IrsFixed -> tranIrsFixedInterestPayments deal leg systemDate
-        | IrsFloat -> tranIrsFixedInterestPayments deal leg systemDate
+        | IrsFixed -> tranIrsFixedInterestPayments roll deal leg systemDate
+        | IrsFloat -> tranIrsFixedInterestPayments roll deal leg systemDate
 
 let transactInterimPaymentsGate 
-    (deal:Deal) (systemDate:DateTime)
+    (roll:RollOrder) (deal:Deal) (systemDate:DateTime)
     =
-    routeLegsToProcess deal deal.LegReceive systemDate
+    routeLegsToProcess roll deal deal.LegReceive systemDate
 
 let testerdeal = { 
     Id = Some 4 ;
@@ -84,6 +85,10 @@ let testerdeal = {
     MatureDate = DateTime(2025,1,3) ;
     TerminateDate = None }
 
-let testing2 = routeLegsToProcess testerdeal (Some irs01fixleg) (DateTime(2020,3,1))
+let testing2 = 
+    routeLegsToProcess 
+        roll1 testerdeal (Some irs01fixleg) (DateTime(2020,3,1))
 
-let testing = transactInterimPaymentsGate testerdeal (DateTime(2020,3,1))
+let testing = 
+    transactInterimPaymentsGate 
+        roll1 testerdeal (DateTime(2020,3,1))

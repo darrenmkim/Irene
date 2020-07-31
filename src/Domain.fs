@@ -8,11 +8,20 @@ type Ability = Administrator | Approver | Preparer | Viewer
 
 type DayConv = DC'AC360 | DC'30360
 
+type RollOrderType = Populate | Post 
+
+type RollOrder = {
+  Id : int option 
+  RollOrderType : RollOrderType
+  StartDate : DateTime option
+  TargetDate : DateTime }
+
 type Event
   = Contract 
   | Effect 
   | Receive 
   | Pay
+  | Accrue 
   | Valuate 
   | Terminate 
   | Mature 
@@ -68,8 +77,7 @@ type Deal = {
   TradeDate : DateTime
   EffectiveDate : DateTime
   MatureDate : DateTime
-  TerminateDate : DateTime option
-}
+  TerminateDate : DateTime option }
 
 type RateRecord = {
   Id : int option
@@ -77,11 +85,17 @@ type RateRecord = {
   RateCodeId : int
   Percentage : float }
 
+type Account = {
+  Id : int option 
+  Name : string
+  Number : string
+  Description : string }
+
 type Chart = {
   Id : int option
   Name : string
   Activity : string
-  Account : int
+  Account : Account
   DocNumber : int }
 
 type Tran = {
@@ -91,7 +105,15 @@ type Tran = {
   Event : Event
   NumContracts : int
   Amount : float
-  Annotation : string }
+  Annotation : string 
+  RollOrder : RollOrder }
+
+type Journal = {
+  Id : int option
+  Tran : Tran
+  Account : Account
+  Amount : float 
+  RollOrder : RollOrder }
 
 // proof of concept
 type Tester 
