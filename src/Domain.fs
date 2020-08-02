@@ -8,13 +8,25 @@ type Ability = Administrator | Approver | Preparer | Viewer
 
 type DayConv = DC'AC360 | DC'30360
 
-type RollOrderType = Populate | Post 
+type RollKind = Calc | Post | Revert
 
-type RollOrder = {
+let roll_kinds = dict [
+  Calc, "asdf" ;
+  Post, "sdasdfa" ;
+  Revert, "asdf"
+]
+
+type Roll = {
   Id : int option 
-  RollOrderType : RollOrderType
-  StartDate : DateTime option
-  TargetDate : DateTime }
+  Kind : RollKind
+  Start : DateTime
+  Target : DateTime }
+
+let make_roll id kind start target =
+  { Id = id 
+  ;  Kind = kind 
+  ; Start = start 
+  ; Target = target } : Roll
 
 type Event
   = Contract 
@@ -37,9 +49,7 @@ type PayFreq
 
 type NumOfMonths = int
 
-let PayFreqVal 
-  : IDictionary<PayFreq,NumOfMonths> 
-  = dict [ 
+let frequencies = dict [ 
   Monthly, 1 ; 
   Quarterly, 3 ; 
   SemiAnnually, 6 ; 
@@ -48,42 +58,67 @@ let PayFreqVal
 
 type Currency = USD | EUR
 
-type LegType 
+type LegKind 
   = IrsFixed 
   | IrsFloat
 
 type Leg = {
   Id : int option ;
-  LegType : LegType ;
+  Kind : LegKind ;
   Stance : Stance ; 
   Currency : Currency ; 
-  PayFreq : PayFreq ;
-  DayConv : DayConv ;
+  Freq : PayFreq ;
+  Conv : DayConv ;
   Notional : float ;
-  FixedRate : float option }
+  Rate : float option }
+
+let make_leg id kind stance currency freq conv notional rate =
+  { Id = id 
+  ; Kind = kind 
+  ; Stance = stance 
+  ; Currency = currency 
+  ; Freq = freq 
+  ; Conv = conv 
+  ; Notional = notional 
+  ; Rate = rate } : Leg
 
 type RateCode = LIBOR | EURIBOR
 
 type DealClass = SWP | OPT 
 
-type DealType = IRS | CRS | FTR
+type DealKind = IRS | CRS | FTR
 
 type Deal = {
   Id : int option
   Name : string 
-  DealType : DealType
-  LegPay : Leg option
-  LegReceive : Leg option
-  TradeDate : DateTime
-  EffectiveDate : DateTime
-  MatureDate : DateTime
-  TerminateDate : DateTime option }
+  Kind : DealKind
+  Legs : Leg list
+  Traded : DateTime
+  Effected : DateTime
+  Matured : DateTime
+  Terminated : DateTime option }
 
-type RateRecord = {
+let make_deal id name kind legs traded effected matured terminated =
+  { Id = id
+  ; Name = name 
+  ; Kind = kind 
+  ; Legs = legs
+  ; Traded = traded
+  ; Effected = effected
+  ; Matured = matured 
+  ; Terminated = terminated } : Deal
+
+type Rate = {
   Id : int option
   Date : DateTime
-  RateCodeId : int
-  Percentage : float }
+  Code : RateCode
+  Percent : float }
+
+let make_rate id date code percent =
+  { Id = id 
+  ; Date = date
+  ; Code = code
+  ; Percent = percent } : Rate
 
 type Account = {
   Id : int option 
@@ -103,17 +138,27 @@ type Tran = {
   Date : DateTime
   Leg : Leg
   Event : Event
-  NumContracts : int
+  Contracts : int
   Amount : float
-  Annotation : string 
-  RollOrder : RollOrder }
+  Annote : string 
+  Roll : Roll }
+
+let make_tran id date leg event contracts amount annote roll = 
+  { Id = id 
+  ; Date = date
+  ; Leg = leg
+  ; Event = event 
+  ; Contracts = contracts
+  ; Amount = amount
+  ; Annote = annote
+  ; Roll = roll } : Tran 
 
 type Journal = {
   Id : int option
   Tran : Tran
   Account : Account
   Amount : float 
-  RollOrder : RollOrder }
+  RollOrder : Roll }
 
 // proof of concept
 type Tester 

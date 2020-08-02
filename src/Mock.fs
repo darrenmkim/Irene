@@ -2,86 +2,60 @@ module Irene.Mock
 
 open System
 
-let mockRates : RateRecord list = [
-    { Id = None ; Date = DateTime(2020, 1, 1) ; RateCodeId = 1 ; Percentage = 1.5 } ;
-    { Id = None ; Date = DateTime(2020, 1, 3) ; RateCodeId = 1 ; Percentage = 2.0 } ;
-    { Id = None ; Date = DateTime(2020, 7, 3) ; RateCodeId = 1 ; Percentage = 2.5 } ;
-    { Id = None ; Date = DateTime(2021, 1, 3) ; RateCodeId = 1 ; Percentage = 3.0 } ;
-    { Id = None ; Date = DateTime(2021, 7, 3) ; RateCodeId = 1 ; Percentage = 1.5 } ;
-    { Id = None ; Date = DateTime(2022, 1, 3) ; RateCodeId = 1 ; Percentage = 2.0 } ;
-    { Id = None ; Date = DateTime(2022, 7, 3) ; RateCodeId = 1 ; Percentage = 2.5 } ;
-    { Id = None ; Date = DateTime(2023, 1, 3) ; RateCodeId = 1 ; Percentage = 3.0 } ;
-    { Id = None ; Date = DateTime(2023, 7, 3) ; RateCodeId = 1 ; Percentage = 2.0 } ;
-    { Id = None ; Date = DateTime(2024, 1, 3) ; RateCodeId = 1 ; Percentage = 2.5 } ;
-    { Id = None ; Date = DateTime(2024, 7, 3) ; RateCodeId = 1 ; Percentage = 1.5 } ;
-    { Id = None ; Date = DateTime(2025, 1, 3) ; RateCodeId = 1 ; Percentage = 2.0 } ;
-    { Id = None ; Date = DateTime(2025, 7, 3) ; RateCodeId = 1 ; Percentage = 2.5 } ;
-    { Id = None ; Date = DateTime(2026, 1, 3) ; RateCodeId = 1 ; Percentage = 1.5 } ;
-    { Id = None ; Date = DateTime(2026, 7, 3) ; RateCodeId = 1 ; Percentage = 2.0 } ;
-    { Id = None ; Date = DateTime(2027, 1, 3) ; RateCodeId = 1 ; Percentage = 2.5 } ;
-    { Id = None ; Date = DateTime(2027, 7, 3) ; RateCodeId = 1 ; Percentage = 3.0 } ;
-]
+let mock_rates = [ 
+    (make_rate (None) (DateTime(2020,1,1)) (LIBOR) (1.5)) ; 
+    (make_rate (None) (DateTime(2020,1,3)) (LIBOR) (1.5)) ; 
+    (make_rate (None) (DateTime(2020,6,3)) (LIBOR) (1.5)) ; 
+    (make_rate (None) (DateTime(2021,1,3)) (LIBOR) (1.5)) ; 
+    (make_rate (None) (DateTime(2021,6,3)) (LIBOR) (1.5)) ; 
+    (make_rate (None) (DateTime(2022,1,3)) (LIBOR) (1.5)) ; 
+    (make_rate (None) (DateTime(2022,6,3)) (LIBOR) (1.5)) ; 
+    (make_rate (None) (DateTime(2023,1,3)) (LIBOR) (1.5)) ; 
+    (make_rate (None) (DateTime(2023,6,3)) (LIBOR) (1.5)) ; 
+    (make_rate (None) (DateTime(2024,1,3)) (LIBOR) (1.5)) ; 
+    (make_rate (None) (DateTime(2024,6,3)) (LIBOR) (1.5)) ; 
+    (make_rate (None) (DateTime(2025,1,3)) (LIBOR) (1.5)) ;
+    (make_rate (None) (DateTime(2025,6,3)) (LIBOR) (1.5)) ; 
+    (make_rate (None) (DateTime(2026,1,3)) (LIBOR) (1.5)) ]
 
-let irs01fixleg : Leg =  {
-    Id = Some 11 ;
-    LegType = IrsFixed ; 
-    Stance = Payer ; // this is payside leg
-    Currency = USD ; // usd
-    PayFreq = SemiAnnually ; // semi-annual
-    DayConv = DC'AC360 ; // default
-    Notional = 1000000.0 ;
-    FixedRate = Some 2.0
-}
+let mock_leg_a = 
+    (make_leg 
+        (Some 11)
+        (IrsFixed)
+        (Payer)
+        (USD)
+        (SemiAnnually)
+        (DC'AC360)
+        (1000000.0)
+        (Some 2.0))
 
-let irs01floatlet : Leg =  {
-    Id = Some 12 ; 
-    LegType = IrsFloat ;
-    Stance = Payer ;
-    Currency = USD ; // usd
-    PayFreq = SemiAnnually ; // semi-annua
-    DayConv = DC'AC360 ; 
-    Notional = 1000000.0 ;
-    FixedRate = None 
-}
+let mock_leg_b = 
+    (make_leg 
+        (Some 12)
+        (IrsFloat)
+        (Receiver)
+        (USD)
+        (SemiAnnually)
+        (DC'AC360)
+        (1000000.0)
+        (None))
 
-let dealTableMockItems : Deal list  = [
-    { Id = Some 4 ;
-         Name = "IRS01" ;
-        DealType = IRS ;
-        LegPay =  Some irs01floatlet ; 
-        LegReceive = Some irs01fixleg ; 
-        TradeDate = DateTime(2020,1,1) ;
-        EffectiveDate = DateTime(2020,1,3) ;
-        MatureDate = DateTime(2025,1,3) ;
-        TerminateDate = None
-    }; 
-      { Id = Some 4 ;
-        Name = "IRS02" ;
-        DealType = IRS ;
-        LegPay =  Some irs01floatlet ; 
-        LegReceive = Some irs01fixleg ; 
-        TradeDate = DateTime(2020,1,1) ;
-        EffectiveDate = DateTime(2020,1,3) ;
-        MatureDate = DateTime(2025,1,3) ;
-        TerminateDate = None
-    }; 
-]
+let mock_deal = 
+    (make_deal 
+        (Some 4)
+        ("IRS01")
+        (IRS)
+        [mock_leg_a ; mock_leg_b]
+        (DateTime(2020,1,1))
+        (DateTime(2020,1,3))
+        (DateTime(2025,1,3))
+        (None))
 
-let testerdeal2 = { 
-    Id = Some 4 ;
-    Name = "IRS01" ;
-    DealType = IRS ;
-    LegPay =  Some irs01floatlet ; 
-    LegReceive = Some irs01fixleg ; 
-    TradeDate = DateTime(2020,1,1) ;
-    EffectiveDate = DateTime(2020,1,3) ;
-    MatureDate = DateTime(2025,1,3) ;
-    TerminateDate = None }
+let mock_roll = 
+    (make_roll 
+        (Some 1) 
+        (Calc) 
+        (DateTime(2020,3,1))
+        (DateTime(2020,7,31)))
 
-let roll1 : RollOrder = {
-    Id = Some 1 ;
-    RollOrderType = Populate ; 
-    StartDate = Some (DateTime(2020,3,1)) ; 
-    TargetDate = DateTime(2020,7,31) }
-
-
+let mock_sys_date = (DateTime(2020,3,1))
