@@ -26,4 +26,4 @@ let rec cash_irs_fixed (deal:Deal) (leg:Leg) (roll:Roll) (pick:DateTime) =
         tran :: (cash_irs_fixed deal leg roll new_pick)
 
 let trial_mock_a = cash_irs_fixed mock_deal mock_leg_a mock_roll mock_sys_date
-let trial_mock_b = cash_irs_fixed mock_deal mock_leg_b mock_roll mock_sys_date
+// let trial_mock_b = cash_irs_fixed mock_deal mock_leg_b mock_roll mock_sys_date
