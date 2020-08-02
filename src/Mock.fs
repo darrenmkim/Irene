@@ -16,12 +16,12 @@ let mock_rates = [
     (make_rate (None) (DateTime(2024,6,3)) (LIBOR) (1.5)) ; 
     (make_rate (None) (DateTime(2025,1,3)) (LIBOR) (1.5)) ;
     (make_rate (None) (DateTime(2025,6,3)) (LIBOR) (1.5)) ; 
-    (make_rate (None) (DateTime(2026,1,3)) (LIBOR) (1.5)) ]
+    (make_rate (None) (DateTime(2026,1,3)) (LIBOR) (1.5)) ] 
 
 let mock_leg_a = 
     (make_leg 
         (Some 11)
-        (IrsFixed)
+        (IRS_FIX)
         (Payer)
         (USD)
         (SemiAnnually)
@@ -32,7 +32,7 @@ let mock_leg_a =
 let mock_leg_b = 
     (make_leg 
         (Some 12)
-        (IrsFloat)
+        (IRS_FLT)
         (Receiver)
         (USD)
         (SemiAnnually)
@@ -58,4 +58,4 @@ let mock_roll =
         (DateTime(2020,3,1))
         (DateTime(2020,7,31)))
 
-let mock_sys_date = (DateTime(2020,3,1))
+let mock_sys_date = (DateTime(2020,3,3))

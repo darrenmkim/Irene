@@ -59,27 +59,27 @@ let frequencies = dict [
 type Currency = USD | EUR
 
 type LegKind 
-  = IrsFixed 
-  | IrsFloat
+  = IRS_FIX 
+  | IRS_FLT
 
 type Leg = {
   Id : int option ;
   Kind : LegKind ;
   Stance : Stance ; 
-  Currency : Currency ; 
+  Curr : Currency ; 
   Freq : PayFreq ;
   Conv : DayConv ;
   Notional : float ;
   Rate : float option }
 
-let make_leg id kind stance currency freq conv notional rate =
+let make_leg id kind stance curr freq conv notio rate =
   { Id = id 
   ; Kind = kind 
   ; Stance = stance 
-  ; Currency = currency 
+  ; Curr = curr 
   ; Freq = freq 
   ; Conv = conv 
-  ; Notional = notional 
+  ; Notional = notio 
   ; Rate = rate } : Leg
 
 type RateCode = LIBOR | EURIBOR
