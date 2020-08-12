@@ -18,10 +18,31 @@ let mock_rates = [
     (make_rate (None) (DateTime(2025,6,3)) (LIBOR) (1.5)) ; 
     (make_rate (None) (DateTime(2026,1,3)) (LIBOR) (1.5)) ] 
 
+let mock_pact_irsfix = (make_pact (Some 1) "IRSFIX" "Interest Rate Swap Fixed Leg") 
+let mock_pact_irsflt = (make_pact (Some 2) "IRSFLT" "Interest Rate Swap Float Leg") 
+
+(*
+let mock_accounts = [
+    (make_account None "Cash" IRSFIX Pay "12340000" "Cash clearing") ;
+    (make_account None "Cash" IRSFIX Pay "12340000" "Cash clearing") ;
+    (make_account None "Cash" IRSFIX Pay "12340000" "Cash clearing") ;
+    (make_account None "Cash" IRSFIX Pay "12340000" "Cash clearing") ;
+    (make_account None "Cash" IRSFIX Pay "12340000" "Cash clearing") ;
+    (make_account None "Cash" IRSFIX Pay "12340000" "Cash clearing") ;
+    (make_account None "Cash" IRSFIX Pay "12340000" "Cash clearing") ;
+    (make_account None "Cash" IRSFIX Pay "12340000" "Cash clearing") ;
+]
+*)
+
+
+
+
+
+
 let mock_leg_a = 
     (make_leg 
         (Some 11)
-        (IRS_FIX)
+        mock_pact_irsfix
         (Payer)
         (USD)
         (SemiAnnually)
@@ -32,7 +53,7 @@ let mock_leg_a =
 let mock_leg_b = 
     (make_leg 
         (Some 12)
-        (IRS_FLT)
+        mock_pact_irsflt
         (Receiver)
         (USD)
         (SemiAnnually)

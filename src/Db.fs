@@ -1,4 +1,4 @@
-module Irene.AdaptDb
+module Irene.Db
 
 open System
 open System.Data.SQLite

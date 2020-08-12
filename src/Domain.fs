@@ -4,11 +4,39 @@ module Irene.Domain
 open System
 open System.Collections.Generic
 
+
+
+
+/// 
+type DbId = int 
+type DbName = string
+
+
+/// DEAL ///
+
+type Breed = 
+  IRS | CRS | FTR
+
+type Deal = {
+  Id : DbId ; Name : string ; Breed : Breed ; Traded : DateTime
+  Effected : DateTime ; Matured : DateTime ; Terminated : DateTime option }
+
+let make_deal 
+  id name breed traded 
+  effected matured terminated = { 
+    Id = id ; Name = name ; Breed = breed ; Traded = traded ; 
+    Effected = effected ; Matured = matured ; Terminated = terminated } : Deal
+
+
+
+
+
+
 type Ability = Administrator | Approver | Preparer | Viewer
 
 type DayConv = DC'AC360 | DC'30360
 
-type RollKind = Calc | Post | Revert
+type Order = Calc | Post | Revert
 
 let roll_kinds = dict [
   Calc, "asdf" ;
@@ -18,36 +46,29 @@ let roll_kinds = dict [
 
 type Roll = {
   Id : int option 
-  Kind : RollKind
+  Order : Order
   Start : DateTime
   Target : DateTime }
 
-let make_roll id kind start target =
+let make_roll id order start target =
   { Id = id 
-  ;  Kind = kind 
+  ; Order = order 
   ; Start = start 
   ; Target = target } : Roll
 
-type Event
-  = Contract 
-  | Effect 
-  | Receive 
-  | Pay
-  | Accrue 
-  | Valuate 
-  | Terminate 
-  | Mature 
+type Event 
+  = Contract | Effect | Receive | Pay 
+  | Accrue | Valuate | Terminate | Mature 
 
-type Stance = Payer | Receiver | Buyer | Seller
+type Stance 
+  = Payer | Receiver | Buyer | Seller
 
 type PayFreq
-  = Monthly
-  | Quarterly
-  | SemiAnnually
-  | Annually
-  | BiAnnually
+  = Monthly | Quarterly | SemiAnnually
+  | Annually | BiAnnually
 
-type NumOfMonths = int
+type NumOfMonths 
+  = int
 
 let frequencies = dict [ 
   Monthly, 1 ; 
@@ -58,13 +79,21 @@ let frequencies = dict [
 
 type Currency = USD | EUR
 
-type LegKind 
-  = IRS_FIX 
-  | IRS_FLT
+type Pact = {
+  Id : int option 
+  Code : string 
+  Name : string }
+
+let make_pact id code name =
+  { Id = id 
+  ; Code = code 
+  ; Name = name } : Pact
 
 type Leg = {
-  Id : int option ;
-  Kind : LegKind ;
+  Id : DbId ;
+  Name : DbName ;
+  DealId : DbId ; 
+  Pact : Pact ;
   Stance : Stance ; 
   Curr : Currency ; 
   Freq : PayFreq ;
@@ -72,9 +101,13 @@ type Leg = {
   Notional : float ;
   Rate : float option }
 
-let make_leg id kind stance curr freq conv notio rate =
+let make_leg 
+  id name deal_id pact stance 
+  curr freq conv notio rate =
   { Id = id 
-  ; Kind = kind 
+  ; Name = name 
+  ; DealId = deal_id
+  ; Pact = pact
   ; Stance = stance 
   ; Curr = curr 
   ; Freq = freq 
@@ -86,27 +119,6 @@ type RateCode = LIBOR | EURIBOR
 
 type DealClass = SWP | OPT 
 
-type DealKind = IRS | CRS | FTR
-
-type Deal = {
-  Id : int option
-  Name : string 
-  Kind : DealKind
-  Legs : Leg list
-  Traded : DateTime
-  Effected : DateTime
-  Matured : DateTime
-  Terminated : DateTime option }
-
-let make_deal id name kind legs traded effected matured terminated =
-  { Id = id
-  ; Name = name 
-  ; Kind = kind 
-  ; Legs = legs
-  ; Traded = traded
-  ; Effected = effected
-  ; Matured = matured 
-  ; Terminated = terminated } : Deal
 
 type Rate = {
   Id : int option
@@ -114,24 +126,73 @@ type Rate = {
   Code : RateCode
   Percent : float }
 
-let make_rate id date code percent =
+let make_rate 
+  id date code percent =
   { Id = id 
   ; Date = date
   ; Code = code
   ; Percent = percent } : Rate
 
-type Account = {
-  Id : int option 
-  Name : string
-  Number : string
-  Description : string }
 
-type Chart = {
+
+(* ACCOUNT AND PRESET *)
+
+(*
+  (defrecord account [id name number desc])
+(defn make-account [id name number desc]
+  (->account id name number desc))
+*)
+type Account = {
+  Id : DbId 
+  Name : DbName
+  Num : string
+  Desc : string
+  Active : Boolean }
+
+let make_account 
+  id name number desc pact event active =
+  { Id = id 
+  ; Name = name 
+  ; Number = number
+  ; Desc = desc 
+  ; Pact = pact
+  ; Event = event 
+  ; Active = active } : Account
+
+(*
+(defrecord preset [id pact event name account-id sign])
+(defn make-preset [id pact event name account-id sign]
+  (->preset id pact event name account-id sign))
+*)
+
+type Sign = + | - 
+
+type Preset = {
+  Id : DbId
+  Name : DbName
+  Pact : Pact 
+  Event : Event 
+  AccountId : DbId
+  Sign : Sign }
+
+
+
+
+
+type Entry = {
   Id : int option
-  Name : string
-  Activity : string
   Account : Account
-  DocNumber : int }
+  Amount : float 
+  Roll : Roll }
+
+let make_entry id account amount roll =
+  { Id = id 
+  ; Account = account 
+  ; Amount = amount 
+  ; Roll = roll } : Entry
+
+type Journal
+  = Entry list
 
 type Tran = {
   Id : int option
@@ -141,9 +202,12 @@ type Tran = {
   Contracts : int
   Amount : float
   Annote : string 
-  Roll : Roll }
+  Roll : Roll 
+  Journal : Journal }
 
-let make_tran id date leg event contracts amount annote roll = 
+let make_tran 
+  id date leg event contracts 
+  amount annote roll journal = 
   { Id = id 
   ; Date = date
   ; Leg = leg
@@ -151,22 +215,15 @@ let make_tran id date leg event contracts amount annote roll =
   ; Contracts = contracts
   ; Amount = amount
   ; Annote = annote
-  ; Roll = roll } : Tran 
-
-type Journal = {
-  Id : int option
-  Tran : Tran
-  Account : Account
-  Amount : float 
-  RollOrder : Roll }
+  ; Roll = roll
+  ; Journal = journal 
+  } : Tran 
 
 // proof of concept
 type Tester 
   = Greet of string
   | Speech of string list 
   | Close of Tran
-
-
 
 (*
   let currencies : Currency list = [

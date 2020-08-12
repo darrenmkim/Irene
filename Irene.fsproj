@@ -5,7 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src/Domain.fs" />
-    <Compile Include="src/AdaptDb.fs" />
+    <Compile Include="src/Db.fs" />
     <Compile Include="src/Mock.fs" />
     <Compile Include="src/Cash.fs" />
     <Compile Include="src/Accrue.fs" />
