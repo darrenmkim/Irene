@@ -4,7 +4,9 @@ module Irene.Domain
 type Id = int 
 type Name = string
 type Count = int
-type NumVal = float
+type MoneyVal = float
+type RateVal = float
+type PercentVal = float
 type Date = System.DateTime
 type Time = System.DateTime
 type Memo = string
@@ -32,9 +34,9 @@ type Leg =
  ; LocalCurId : Id
  ; PaymentFreqId : Id
  ; DayConvId : Id
- ; NotionalAmt : NumVal
+ ; NotionalAmt : MoneyVal
  ; RateCodeId : Id
- ; RateGiven : NumVal option }
+ ; RateGiven : RateVal option }
 
 type Deal = 
   { Id : Id 
@@ -51,7 +53,7 @@ type Transaction =
   ; LegId : Id
   ; EventId : Id
   ; Contracts : Count
-  ; Amount : NumVal
+  ; Amount : MoneyVal
   ; Annote : Memo 
   ; RollId : Id }
 
@@ -62,7 +64,7 @@ type Account =
   ; Active : Active
   ; Memo : Memo }
 
-type JournalPreset = 
+type JournalTemplate = 
   { Id : Id
   ; Name : Name
   ; PactId : Id 
@@ -73,11 +75,11 @@ type JournalPreset =
 type JournalEntry = 
   { Id : Id
   ; AccountId : Id
-  ; Amount : NumVal 
+  ; Amount : MoneyVal 
   ; RollId : Id }
 
 type Rate = 
   { Id : Id
   ; Date : Date
   ; Code : Name
-  ; Percent : NumVal }
+  ; Percent : PercentVal }

@@ -9,29 +9,25 @@ let ABILITY = [
 let BREED = [
     { Id = 1 ; Code = "IRS" ; Memo = "Fixed Leg of Interest Rate Swap" } ;
     { Id = 2 ; Code = "CRS" ; Memo = "Float Leg of Interest Rate Swap" } ;
-    { Id = 3 ; Code = "FTR" ; Memo = "Float Leg of Interest Rate Swap" } ]
-
-(*
-let dealtypes : DealType list = [
-    { Id = 1135 ; Key = "ftr" ; Memo = "Future" ; DealClassId = 2 }
-    { Id = 1235 ; Key = "ftr" ; Memo = "FX Forward" ; DealClassId = 2 }
-    { Id = 1335 ; Key = "ftr" ; Memo = "Future" ; DealClassId = 2 }
-    { Id = 1435 ; Key = "ftr" ; Memo = "Bond Forward" ; DealClassId = 2 }
-    { Id = 1535 ; Key = "ftr" ; Memo = "Total Return Swap" ; DealClassId = 2 }
-    { Id = 1635 ; Key = "irs" ; Memo = "Interest Rate Swap" ; DealClassId = 2 }
-    { Id = 1735 ; Key = "ftr" ; Memo = "Currency Swap" ; DealClassId = 2 }
-    { Id = 1835 ; Key = "ftr" ; Memo = "Call Option" ; DealClassId = 2 }
-    { Id = 1935 ; Key = "ftr" ; Memo = "Put Option" ; DealClassId = 2 }
-    { Id = 2035 ; Key = "ftr" ; Memo = "Corridor Option" ; DealClassId = 2 }
-    { Id = 2135 ; Key = "ftr" ; Memo = "Interest Rate Cap" ; DealClassId = 2 }
-    { Id = 2235 ; Key = "ftr" ; Memo = "Credit Default Swap" ; DealClassId = 2 }
-    { Id = 2335 ; Key = "ftr" ; Memo = "Foreign Currency Spot" ; DealClassId = 2 }
-    { Id = 2435 ; Key = "ftr" ; Memo = "Inflation Swap" ; DealClassId = 2 }
-    { Id = 2535 ; Key = "ftr" ; Memo = "Treasury Lock" ; DealClassId = 2 }
-    { Id = 2635 ; Key = "ftr" ; Memo = "Reverse Treasury Lock" ; DealClassId = 2 }
-    { Id = 2735 ; Key = "ftr" ; Memo = "Swaption" ; DealClassId = 2 }
-    { Id = 2835 ; Key = "ftr" ; Memo = "Commodity Swap" ; DealClassId = 2 } ]
-*)
+    { Id = 3 ; Code = "FTR" ; Memo = "Float Leg of Interest Rate Swap" } 
+    { Id = 4 ; Code = "ftr" ; Memo = "Future" }
+    { Id = 5 ; Code = "ftr" ; Memo = "FX Forward" }
+    { Id = 6 ; Code = "ftr" ; Memo = "Future" }
+    { Id = 7 ; Code = "ftr" ; Memo = "Bond Forward" }
+    { Id = 8 ; Code = "ftr" ; Memo = "Total Return Swap" }
+    { Id = 9 ; Code = "irs" ; Memo = "Interest Rate Swap" }
+    { Id = 10 ; Code = "ftr" ; Memo = "Currency Swap" }
+    { Id = 11 ; Code = "ftr" ; Memo = "Call Option" }
+    { Id = 12 ; Code = "ftr" ; Memo = "Put Option" }
+    { Id = 13 ; Code = "ftr" ; Memo = "Corridor Option" }
+    { Id = 14 ; Code = "ftr" ; Memo = "Interest Rate Cap" }
+    { Id = 15 ; Code = "ftr" ; Memo = "Credit Default Swap" }
+    { Id = 16 ; Code = "ftr" ; Memo = "Foreign Currency Spot" }
+    { Id = 17 ; Code = "ftr" ; Memo = "Inflation Swap" }
+    { Id = 18 ; Code = "ftr" ; Memo = "Treasury Lock" }
+    { Id = 19 ; Code = "ftr" ; Memo = "Reverse Treasury Lock" }
+    { Id = 20 ; Code = "ftr" ; Memo = "Swaption" }
+    { Id = 21 ; Code = "ftr" ; Memo = "Commodity Swap" } ]
 
 let PACT = [
     { Id = 1 ; Code = "IRSFIX" ; Memo = "Fixed Leg of Interest Rate Swap" } ;
