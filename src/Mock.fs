@@ -1,7 +1,9 @@
 module Irene.Mock
 
 open System
+open Domain
 
+(*
 let mock_rates = [ 
     (make_rate (None) (DateTime(2020,1,1)) (LIBOR) (1.5)) ; 
     (make_rate (None) (DateTime(2020,1,3)) (LIBOR) (1.5)) ; 
@@ -21,7 +23,7 @@ let mock_rates = [
 let mock_pact_irsfix = (make_pact (Some 1) "IRSFIX" "Interest Rate Swap Fixed Leg") 
 let mock_pact_irsflt = (make_pact (Some 2) "IRSFLT" "Interest Rate Swap Float Leg") 
 
-(*
+
 let mock_accounts = [
     (make_account None "Cash" IRSFIX Pay "12340000" "Cash clearing") ;
     (make_account None "Cash" IRSFIX Pay "12340000" "Cash clearing") ;
@@ -33,6 +35,17 @@ let mock_accounts = [
     (make_account None "Cash" IRSFIX Pay "12340000" "Cash clearing") ;
 ]
 *)
+
+
+
+
+(*
+(def legs
+  [(make-leg 1  1 :irs-fixed :payer :usd :usd
+             :monthly :dc-30-360  nil 2.0)
+   (make-leg 2 "ABCIRSFLT" 1 :irs-float :receiver :usd :usd
+             :monthly :dc-30-360 1000000.0 :libor-3m nil)])
+
 
 
 
@@ -80,3 +93,5 @@ let mock_roll =
         (DateTime(2020,7,31)))
 
 let mock_sys_date = (DateTime(2020,3,3))
+
+*)
