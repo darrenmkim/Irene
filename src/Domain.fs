@@ -3,6 +3,7 @@ module Irene.Domain
 
 type Id = int 
 type Name = string
+type Code = string
 type Count = int
 type MoneyVal = float
 type RateVal = float
@@ -14,8 +15,16 @@ type Active = bool
 
 type Preset = 
   { Id : Id
-  ; Code : Name 
+  ; Code : Code 
   ; Memo : Memo }
+
+type Person = 
+  { Id : Id
+  ; Username : Name 
+  ; Password : Code
+  ; Email : Code 
+  ; NickName : Name
+  ; OpenDate : Date }
 
 type Roll = 
   { Id : Id

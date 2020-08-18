@@ -1,6 +1,11 @@
 module Irene.TranCash
 
-open System
+(* It wasn't easy to decide what data types should be used for argument passing.
+   I have finally decided to only use primitive data types, mostly Ids. 
+   The whole object can be found by the id and then called within the function. 
+   As a rule, only primitive data (e.g. ids, dates) can be passed to function. *)
+
+
 open Irene.Mock
 
 (*
@@ -9,6 +14,36 @@ let get_rate (rates:Rate list) date code =
                 |> List.find 
                 (fun (r:Rate) -> r.Date = date && r.Code = code)
     rate.Percent
+*)
+
+let getDealsByDates startDate endDate =
+    mockdeals
+    |> List.filter (fun (d:Deal) -> d.TradeDate > startDate 
+                                 || d.MatureDate < endDate)
+    |> List.map (fun d -> d.Id)
+            
+let getLegIdsByDealIds dealIds =
+    mocklegs
+    |> List.filter (fun (l:Leg) -> List.contains l.DealId dealIds) 
+    |> List.map (fun l -> l.Id)
+
+let getRollById id = 
+    List.find (fun (r:Roll) -> r.Id = id) mockrolls
+    
+let roll id =
+    (* This function is the entry point of rolling order. 
+       It only takes the rollId and do the rest of the jobs. *)
+    let roll = getRollById id
+    let dealIds = getDealsByDates roll.StartDate roll.EndDate
+    let legIds = getLegIdsByDealIds dealIds
+    legIds
+    
+
+
+
+
+(*
+
 
 let rec cash_irs_fixed (deal:Deal) (leg:Leg) (roll:Roll) (pick:DateTime) = 
     if pick >= deal.Matured then []
@@ -29,9 +64,5 @@ let rec cash_irs_fixed (deal:Deal) (leg:Leg) (roll:Roll) (pick:DateTime) =
         let tran : Tran = 
             (make_tran None pick leg Pay 1 interest annote roll journal)
         tran :: (cash_irs_fixed deal leg roll new_pick)
-
-let trial_mock_a = cash_irs_fixed mock_deal mock_leg_a mock_roll mock_sys_date
-// let trial_mock_b = cash_irs_fixed mock_deal mock_leg_b mock_roll mock_sys_date
-
 
 *)

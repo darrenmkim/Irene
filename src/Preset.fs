@@ -1,33 +1,27 @@
 module Irene.Preset
 
 let ABILITY = [
-    { Id = 1 ; Code = "Administrator" ; Memo = "Administrator" } ;
-    { Id = 2 ; Code = "Approver" ; Memo = "Approver" } ; 
-    { Id = 3 ; Code = "Preparer" ; Memo = "Preparer" } ;
-    { Id = 4 ; Code = "Viewer" ; Memo = "Viewer" } ]
+    { Id = 1 ; Code = "ADMIN" ; Memo = "Administrator" } ;
+    { Id = 2 ; Code = "APPROVER" ; Memo = "Approver" } ; 
+    { Id = 3 ; Code = "PREPARER" ; Memo = "Preparer" } ;
+    { Id = 4 ; Code = "VIEWER" ; Memo = "Viewer" } ]
 
 let BREED = [
-    { Id = 1 ; Code = "IRS" ; Memo = "Fixed Leg of Interest Rate Swap" } ;
-    { Id = 2 ; Code = "CRS" ; Memo = "Float Leg of Interest Rate Swap" } ;
-    { Id = 3 ; Code = "FTR" ; Memo = "Float Leg of Interest Rate Swap" } 
-    { Id = 4 ; Code = "ftr" ; Memo = "Future" }
-    { Id = 5 ; Code = "ftr" ; Memo = "FX Forward" }
-    { Id = 6 ; Code = "ftr" ; Memo = "Future" }
-    { Id = 7 ; Code = "ftr" ; Memo = "Bond Forward" }
-    { Id = 8 ; Code = "ftr" ; Memo = "Total Return Swap" }
-    { Id = 9 ; Code = "irs" ; Memo = "Interest Rate Swap" }
-    { Id = 10 ; Code = "ftr" ; Memo = "Currency Swap" }
-    { Id = 11 ; Code = "ftr" ; Memo = "Call Option" }
-    { Id = 12 ; Code = "ftr" ; Memo = "Put Option" }
-    { Id = 13 ; Code = "ftr" ; Memo = "Corridor Option" }
-    { Id = 14 ; Code = "ftr" ; Memo = "Interest Rate Cap" }
-    { Id = 15 ; Code = "ftr" ; Memo = "Credit Default Swap" }
-    { Id = 16 ; Code = "ftr" ; Memo = "Foreign Currency Spot" }
-    { Id = 17 ; Code = "ftr" ; Memo = "Inflation Swap" }
-    { Id = 18 ; Code = "ftr" ; Memo = "Treasury Lock" }
-    { Id = 19 ; Code = "ftr" ; Memo = "Reverse Treasury Lock" }
-    { Id = 20 ; Code = "ftr" ; Memo = "Swaption" }
-    { Id = 21 ; Code = "ftr" ; Memo = "Commodity Swap" } ]
+    { Id = 1 ; Code = "IRS" ; Memo = "Interest Rate Swap" } ;
+    { Id = 2 ; Code = "CRS" ; Memo = "Currency Swap" } ;
+    { Id = 3 ; Code = "FTR" ; Memo = "Future" } 
+    { Id = 4 ; Code = "CAL" ; Memo = "Call Option" }
+    { Id = 5 ; Code = "PUT" ; Memo = "Put Option" }
+    { Id = 6 ; Code = "CAP" ; Memo = "Interest Rate Cap" }
+    { Id = 7 ; Code = "CDS" ; Memo = "Credit Default Swap" }
+    { Id = 8 ; Code = "TRS" ; Memo = "Total Return Swap" }
+    { Id = 9 ; Code = "CRD" ; Memo = "Corridor Option" }
+    { Id = 10 ; Code = "SPT" ; Memo = "Foreign Currency Spot" }
+    { Id = 11 ; Code = "INF" ; Memo = "Inflation Swap" }
+    { Id = 12 ; Code = "TRL" ; Memo = "Treasury Lock" }
+    { Id = 13 ; Code = "RTR" ; Memo = "Reverse Treasury Lock" }
+    { Id = 14 ; Code = "SWT" ; Memo = "Swaption" }
+    { Id = 15 ; Code = "CMS" ; Memo = "Commodity Swap" } ]
 
 let PACT = [
     { Id = 1 ; Code = "IRSFIX" ; Memo = "Fixed Leg of Interest Rate Swap" } ;
@@ -40,9 +34,9 @@ let STANCE = [
     { Id = 4 ; Code = "SELLER" ; Memo = "Seller Position of Option" } ]
 
 let ORDER = [
-    { Id = 1 ; Code = "Calc" ; Memo = ".." } ;
-    { Id = 2 ; Code = "Post" ; Memo = ".." } ;
-    { Id = 3 ; Code = "Revert" ; Memo = ".." } ]
+    { Id = 1 ; Code = "CALC" ; Memo = ".." } ;
+    { Id = 2 ; Code = "POST" ; Memo = ".." } ;
+    { Id = 3 ; Code = "REVERT" ; Memo = ".." } ]
 
 let FREQUENCY = [
     { Id = 1 ; Code = "CONTINUOUSLY" ; Memo = ".." } ;
