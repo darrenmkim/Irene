@@ -32,8 +32,8 @@ let mockdeals = [
     ; BreedId = 1 
     ; TradeDate = Date(2012,6,8)
     ; EffectDate = Date(2012,6,12) 
-    ; MatureDate = Date(2019,1,2)
-    ; TerminateDate = Some (Date(2019,1,2)) } ]
+    ; TerminateDate = Date(2019,1,2)
+    ; MatureDate = Date(2019,1,2) } ]
 
 let mockrolls = [
     { Id = 1 
@@ -41,3 +41,16 @@ let mockrolls = [
     ; OrderTime = Date(2020,8,18)
     ; StartDate = Date(2012,1,1)
     ; EndDate = Date(2020,8,18) } ]
+
+let mockrates = [
+    { Id = 1 ; Date = Date(2020,3,3) ; Code = 1 ; Percent = 2.5 } ;
+    { Id = 1 ; Date = Date(2020,3,3) ; Code = 1 ; Percent = 2.5 } ;
+    { Id = 1 ; Date = Date(2020,3,3) ; Code = 1 ; Percent = 2.5 } ;
+    { Id = 1 ; Date = Date(2020,3,3) ; Code = 1 ; Percent = 2.5 } ;
+    { Id = 1 ; Date = Date(2020,3,3) ; Code = 1 ; Percent = 2.5 } ;
+    { Id = 1 ; Date = Date(2020,3,3) ; Code = 1 ; Percent = 2.5 } ;
+    { Id = 1 ; Date = Date(2020,3,3) ; Code = 1 ; Percent = 2.5 } ;
+    { Id = 1 ; Date = Date(2020,3,3) ; Code = 1 ; Percent = 2.5 } ;
+    { Id = 1 ; Date = Date(2020,3,3) ; Code = 1 ; Percent = 2.5 } ;
+    { Id = 1 ; Date = Date(2020,3,3) ; Code = 1 ; Percent = 2.5 } ;
+    { Id = 1 ; Date = Date(2020,3,3) ; Code = 1 ; Percent = 2.5 } ; ]

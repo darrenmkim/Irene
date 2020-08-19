@@ -5,37 +5,99 @@ module Irene.TranCash
    The whole object can be found by the id and then called within the function. 
    As a rule, only primitive data (e.g. ids, dates) can be passed to function. *)
 
-
 open Irene.Mock
-
-(*
-let get_rate (rates:Rate list) date code =
-    let rate = rates 
-                |> List.find 
-                (fun (r:Rate) -> r.Date = date && r.Code = code)
-    rate.Percent
-*)
 
 let getDealsByDates startDate endDate =
     mockdeals
-    |> List.filter (fun (d:Deal) -> d.TradeDate > startDate 
-                                 || d.MatureDate < endDate)
-    |> List.map (fun d -> d.Id)
-            
+    |> lfilt (fun (d:Deal) 
+                -> d.TradeDate > startDate 
+                || d.MatureDate < endDate)
+    |> lmap (fun d -> d.Id)
+
+let getDealById id = 
+    lfind (fun (d:Deal) -> d.Id = id) mockdeals
+    
+let getLegById id =
+    lfind (fun (l:Leg) -> l.Id = id) mocklegs
+
 let getLegIdsByDealIds dealIds =
     mocklegs
-    |> List.filter (fun (l:Leg) -> List.contains l.DealId dealIds) 
-    |> List.map (fun l -> l.Id)
+    |> lfilt (fun (l:Leg) -> lcont l.DealId dealIds) 
+    |> lmap (fun l -> l.Id)
 
 let getRollById id = 
-    List.find (fun (r:Roll) -> r.Id = id) mockrolls
+    lfind (fun (r:Roll) -> r.Id = id) mockrolls
     
+let rec makeInterims start ending months = 
+    let newStart = addMonths start months
+    start :: makeInterims newStart ending months 
+
+let decideEvent step trade effect terminate mature legId =
+    let leg = getLegById legId
+    let stanceId = leg.StanceId
+    let frequencyId = leg.PaymentFreqId
+    let series = 
+        lsort [ step ; trade ; effect ; terminate ; mature ]
+    let locate = findIndex series step
+    let interims = makeInterims trade mature 3
+    let eventIdDate = 
+        match locate with 
+        | 0 -> (1, trade)
+        | 1 -> (2, effect)
+        | 2 -> 
+            match stanceId with
+            | 1 -> (3, step)
+            | 2 -> (4, step)
+            | _ -> (0, step)
+        | 3 -> (1, step)
+        | 4 -> (1, step)
+        | _ -> (0, step)
+    eventIdDate
+
+let makeTran legId rollId step =
+    let roll = getRollById rollId
+    let rollStart = roll.StartDate
+    let rollEnd = roll.EndDate
+    let leg = getLegById legId
+    let stanceId = leg.StanceId
+    let legNotional = leg.NotionalAmt
+    let dealId = leg.DealId
+    let deal = getDealById dealId
+    let tradeDt = deal.TradeDate
+    let effectDt = deal.EffectDate
+    let matureDt = deal.MatureDate
+    let terminateDt = deal.TerminateDate
+    let eventId =
+        decideEvent step tradeDt effectDt matureDt terminateDt stanceId
+    let tran = 
+        { Id = 0
+        ; Date = step
+        ; LegId = legId
+        ; EventId = 99 // TO BE UPDATED
+        ; Contracts = 1
+        ; Amount = legNotional
+        ; Annote = "asdf"
+        ; RollId = rollId }
+    tran 
+
+
+
+
+
+
+
+
+
+
+
 let roll id =
     (* This function is the entry point of rolling order. 
        It only takes the rollId and do the rest of the jobs. *)
     let roll = getRollById id
     let dealIds = getDealsByDates roll.StartDate roll.EndDate
     let legIds = getLegIdsByDealIds dealIds
+
+
     legIds
     
 

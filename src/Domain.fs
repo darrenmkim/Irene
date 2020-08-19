@@ -1,4 +1,5 @@
 [<AutoOpen>]
+
 module Irene.Domain
 
 type Id = int 
@@ -52,9 +53,9 @@ type Deal =
   ; Name : Name 
   ; BreedId : Id 
   ; TradeDate : Date
-  ; EffectDate : Date 
-  ; MatureDate : Date
-  ; TerminateDate : Date option }
+  ; EffectDate : Date
+  ; TerminateDate : Date 
+  ; MatureDate : Date }
 
 type Transaction = 
   { Id : Id
@@ -90,5 +91,5 @@ type JournalEntry =
 type Rate = 
   { Id : Id
   ; Date : Date
-  ; Code : Name
+  ; Code : Id
   ; Percent : PercentVal }

@@ -44,13 +44,14 @@ let FREQUENCY = [
     { Id = 3 ; Code = "QUARTERLY" ; Memo = ".." } ; 
     { Id = 4 ; Code = "SEMIANNUALLY" ; Memo = ".." } ;
     { Id = 5 ; Code = "ANNUALLY" ; Memo = ".." } ; 
-    { Id = 6 ; Code = "BIANNUALLY" ; Memo = ".." } ]
+    { Id = 6 ; Code = "BIANNUALLY" ; Memo = ".." } ; 
+    { Id = 9 ; Code = "NONE" ; Memo = ".." } ]
 
 let EVENT = [
-    { Id = 1 ; Code = "CONTRACT" ; Memo = ".." } ;
+    { Id = 1 ; Code = "TRADE" ; Memo = ".." } ;
     { Id = 2 ; Code = "EFFECT" ; Memo = ".." } ;
-    { Id = 3 ; Code = "RECEIVE" ; Memo = ".." } ; 
-    { Id = 4 ; Code = "PAY" ; Memo = ".." } ;
+    { Id = 3 ; Code = "PAY" ; Memo = ".." } ; 
+    { Id = 4 ; Code = "RECEIVE" ; Memo = ".." } ;
     { Id = 5 ; Code = "ACCRUE" ; Memo = ".." } ; 
     { Id = 6 ; Code = "VALUATE" ; Memo = ".." } ; 
     { Id = 7 ; Code = "TERMINATE" ; Memo = ".." } ; 
