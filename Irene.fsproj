@@ -7,12 +7,10 @@
     <Compile Include="src/Domain.fs" />
     <Compile Include="src/Func.fs" />
     <Compile Include="src/Preset.fs" />
-    <Compile Include="src/Db.fs" />
     <Compile Include="src/Mock.fs" />
-    <Compile Include="src/Cash.fs" />
-    <Compile Include="src/Accrue.fs" />
-    <Compile Include="src/Value.fs" />
-    <Compile Include="src/Journal.fs" />
+    <Compile Include="src/Port.fs" />
+    <Compile Include="src/Cashflow.fs" />
+    <Compile Include="src/Roll.fs" />
     <Compile Include="src/Route.fs" />
     <Compile Include="src/Config.fs" />
     <Compile Include="src/Server.fs" />

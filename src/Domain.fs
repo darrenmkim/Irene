@@ -14,7 +14,7 @@ type Time = System.DateTime
 type Memo = string
 type Active = bool 
 
-type Preset = 
+type Basic = 
   { Id : Id
   ; Code : Code 
   ; Memo : Memo }
@@ -57,12 +57,16 @@ type Deal =
   ; TerminateDate : Date 
   ; MatureDate : Date }
 
-type Transaction = 
+type Cashflow = 
   { Id : Id
-  ; Date : Date
+  ; Pay : Date
   ; LegId : Id
   ; EventId : Id
   ; Contracts : Count
+  ; Start : Date
+  ; End : Date
+  ; NumDays : Count
+  ; Rate : RateVal
   ; Amount : MoneyVal
   ; Annote : Memo 
   ; RollId : Id }
@@ -72,6 +76,12 @@ type Account =
   ; Name : Name
   ; AccNum : Name
   ; Active : Active
+  ; Memo : Memo }
+
+type Frequency = 
+  { Id : Id
+  ; Code : Code 
+  ; Months : Count
   ; Memo : Memo }
 
 type JournalTemplate = 
