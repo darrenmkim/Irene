@@ -2,7 +2,6 @@ module Irene.Route
 
 open Microsoft.AspNetCore.Http
 open Giraffe
-open Irene.TranCash
 open Irene.Mock
 
 let router : HttpFunc -> HttpContext -> HttpFuncResult =
