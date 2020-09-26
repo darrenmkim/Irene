@@ -1,5 +1,8 @@
 module Irene.Mock
 
+
+
+(*
 let mocklegs = [
     { Id = 1 
     ; Name = "ABCIRSFIX" 
@@ -54,3 +57,6 @@ let mockrates = [
     { Id = 1 ; Date = Date(2020,3,3) ; Code = 1 ; Percent = 2.5 } ;
     { Id = 1 ; Date = Date(2020,3,3) ; Code = 1 ; Percent = 2.5 } ;
     { Id = 1 ; Date = Date(2020,3,3) ; Code = 1 ; Percent = 2.5 } ; ]
+
+
+    *)

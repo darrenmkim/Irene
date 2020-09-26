@@ -2,6 +2,7 @@
 
 module Irene.Port
 
+(*
 open System
 open System.Data.SQLite
 open Fed.Fred
@@ -60,7 +61,6 @@ let getRate x =
 
 
 
-(*
 
     Create a Fed.Fred object.
 

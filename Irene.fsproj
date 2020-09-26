@@ -5,7 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src/Domain.fs" />
-    <Compile Include="src/Func.fs" />
+    <Compile Include="src/Help.fs" />
     <Compile Include="src/Preset.fs" />
     <Compile Include="src/Mock.fs" />
     <Compile Include="src/Port.fs" />
@@ -19,7 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Giraffe" Version="4.1.*" />
     <PackageReference Include="TaskBuilder.fs" Version="2.1.*" />
-    <PackageReference Include="System.Data.SQLite" Version="1.0.113.1" />
+    <PackageReference Include="FSharp.Data.Dapper" Version="2.0.0" />
     <PackageReference Include="Fed.Fred" Version="1.0.3" /> 
   </ItemGroup>
 </Project>

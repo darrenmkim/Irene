@@ -8,6 +8,8 @@ module Irene.Roll
 open Irene.Mock
 open Irene.Cashflow
 
+
+(*
 let roll id =
     (* This function is the entry point of rolling order. 
        It only takes the rollId and do the rest of the jobs. *)
@@ -16,3 +18,5 @@ let roll id =
     let legIds = getLegIdsByDealIds dealIds
 
     legIds
+
+*)

@@ -2,6 +2,10 @@ module Irene.Cashflow
 
 /// Helper Functions
 
+
+(* 
+
+    
 let stanceToEvent id = 
     match id with 
     | 1 -> 3
@@ -47,7 +51,7 @@ let makeInterestPayments legId rollId =
 
 
 
-(* 
+
 let decideEvent step trade effect terminate mature legId =
     let leg = getLegById legId
     let stanceId = leg.StanceId
