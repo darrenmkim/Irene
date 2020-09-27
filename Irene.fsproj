@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="src/Basis.fs" />
     <Compile Include="src/Domain.fs" />
     <Compile Include="src/Help.fs" />
     <Compile Include="src/Preset.fs" />
