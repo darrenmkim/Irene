@@ -2,16 +2,6 @@
 
 module Irene.Domain
 
-type Id = int 
-type Name = string
-type Memo = string
-type Count = int
-type Money = float
-type Rate = float
-type Percent = float
-type Date = System.DateTime
-type Time = System.DateTime
- 
 
 // Quote 
 
@@ -33,7 +23,7 @@ type Quote =
   | Euribor6M of Rate  
   | Euribor9M of Rate   
   | Euribor1Y of Rate 
-  | None   
+  | Nothing   
 
 let getValueQuote (a : Quote) : (Name * Rate) =
   match a with 
@@ -54,7 +44,7 @@ let getValueQuote (a : Quote) : (Name * Rate) =
   | Euribor6M r -> ("Euribor6M", r) 
   | Euribor9M r -> ("Euribor9M", r) 
   | Euribor1Y r -> ("Euribor1Y", r) 
-  | None -> ("None", 0.0)
+  | Nothing -> ("Nothing", 0.0)
 
 let getTypeQuote (value : (Name * Rate)) : Quote =
   match value with 
@@ -75,8 +65,8 @@ let getTypeQuote (value : (Name * Rate)) : Quote =
   | ("Euribor6M", r) -> Euribor6M r 
   | ("Euribor9M", r) -> Euribor9M r
   | ("Euribor1Y", r) -> Euribor1Y r
-  | ("None", r) -> None 
-  | _ -> None 
+  | ("Nothing", r) -> Nothing 
+  | _ -> Nothing 
 
 (*
 CREATE TYPE rate AS (
@@ -114,7 +104,7 @@ type DealRecord =
   ; EffectDate : Date
   ; MatureDate : Date
   ; TerminateDate : Date option
-  ; Memo : Memo
+  ; Memo : Memo option 
   }
 
 (*
@@ -182,25 +172,11 @@ type LegRecord =
   ; MovingQuote : Quote option 
   ; Memo : Memo option }
 
-let testLeg = 
-  { Id = Some 12 
-  ; Type = "IRSFIX" 
-  ; DealId = 1 
-  ; Stance = Stance.Pay 
-  ; Period = 5 
-  ; Span = Span.Annual 
-  ; Day = Day.D30360
-  ; Notional = Currency.USD 1000000.0
-  ; FixedQuote = Some (Quote.Libor1Y 0.0123) 
-  ; MovingQuote = Some (Quote.Libor1Y 0.0123) 
-  ; Memo = None } 
-
-
 let makeLegRecord (l : Leg) : LegRecord =
   match l with 
   | IRSFIX (id, dealId, stance
           , period, span, day
-          , notional, fixedQuote, Memo )-> { Id = id 
+          , notional, fixedQuote, memo )-> { Id = id 
                                            ; Type = "IRSFIX" 
                                            ; DealId = dealId 
                                            ; Stance = stance 
@@ -210,10 +186,10 @@ let makeLegRecord (l : Leg) : LegRecord =
                                            ; Notional = notional 
                                            ; FixedQuote = Some fixedQuote 
                                            ; MovingQuote = None 
-                                           ; Memo = None } 
-  | IRSFLT (Id, dealId, stance
+                                           ; Memo = memo } 
+  | IRSFLT (id, dealId, stance
           , period, span, day
-          , notional, movingQuote, Memo )-> { Id = id 
+          , notional, movingQuote, memo )-> { Id = id 
                                             ; Type = "IRSFIX" 
                                             ; DealId = dealId 
                                             ; Stance = stance 
@@ -223,11 +199,7 @@ let makeLegRecord (l : Leg) : LegRecord =
                                             ; Notional = notional 
                                             ; FixedQuote = None 
                                             ; MovingQuote = Some movingQuote 
-                                            ; Memo = None } 
-
-
-
-
+                                            ; Memo = memo } 
 
 
 

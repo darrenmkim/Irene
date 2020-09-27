@@ -20,7 +20,7 @@ type Ability =
   | Approver 
   | Preparer 
   | Viewer
-  | None 
+  | Nothing 
 
 let getValueAbility a = 
   match a with 
@@ -28,7 +28,7 @@ let getValueAbility a =
   | Approver -> "Approver"
   | Preparer -> "Preparer"
   | Viewer -> "Viewer"
-  | None -> "None"
+  | Nothing -> "Nothing"
 
 let getTypeAbility v = 
   match v with 
@@ -36,7 +36,7 @@ let getTypeAbility v =
   | "Approver" -> Approver
   | "Preparer" -> Preparer
   | "Viewer" -> Viewer
-  | _ -> None
+  | _ -> Nothing
 
 
 // Stance 
@@ -46,7 +46,7 @@ type Stance =
   | Receive
   | Buy
   | Sell
-  | None 
+  | Nothing 
 
 let getValueStance a = 
   match a with 
@@ -54,7 +54,7 @@ let getValueStance a =
   | Receive -> "Receive"
   | Buy -> "Buy"
   | Sell -> "Sell"
-  | None -> "None"
+  | Nothing -> "Nothing"
 
 let getTypeStance v = 
   match v with 
@@ -62,7 +62,7 @@ let getTypeStance v =
   | "Receive" -> Receive
   | "Buy" -> Buy
   | "Sell" -> Sell
-  | _ -> None
+  | _ -> Nothing
 
 
 // Span 
@@ -74,7 +74,7 @@ type Span =
   | Semiannual
   | Annual
   | Biannual
-  | None
+  | Nothing
 
 let getValueSpan t = 
   match t with 
@@ -84,7 +84,7 @@ let getValueSpan t =
   | Semiannual -> "Semiannual"
   | Annual -> "Annual"
   | Biannual -> "Biannual"
-  | None -> "None"
+  | Nothing -> "Nothing"
 
 let getTypeSpan v = 
   match v with 
@@ -94,8 +94,8 @@ let getTypeSpan v =
   | "Semiannual" -> Semiannual
   | "Annual" -> Annual
   | "Biannual" -> Biannual
-  | "None" -> None
-  | _ -> None
+  | "Nothing" -> Nothing
+  | _ -> Nothing
 
 
 // Status
@@ -106,7 +106,7 @@ type Status =
   | Deleted
   | Activated
   | Deactivated 
-  | None
+  | Nothing
   
 let getValueStatus t = 
   match t with 
@@ -115,7 +115,7 @@ let getValueStatus t =
   | Deleted -> "Deleted"
   | Activated -> "Activated"
   | Deactivated -> "Deactivated"
-  | None -> "None"
+  | Nothing -> "Nothing"
 
 let getTypeStatus v = 
   match v with 
@@ -124,8 +124,8 @@ let getTypeStatus v =
   | "Deleted" -> Deleted
   | "Activated" -> Activated
   | "Deactivated" -> Deactivated
-  | "None" -> None
-  | _ -> None
+  | "Nothing" -> Nothing
+  | _ -> Nothing
 
 
 // Day  
@@ -133,20 +133,20 @@ let getTypeStatus v =
 type Day = 
   | D30360
   | DAC360
-  | None
+  | Nothing
 
 let getValueDay t = 
   match t with 
   | D30360 -> "30360"
   | DAC360 -> "AC360"
-  | None -> "None"
+  | Nothing -> "Nothing"
 
 let getTypeDay v = 
   match v with 
   | "30360" -> D30360
   | "AC360" -> DAC360
-  | "None" -> None
-  | _ -> None
+  | "Nothing" -> Nothing
+  | _ -> Nothing
 
 
 // Currency 
@@ -331,7 +331,7 @@ type Currency =
   | XSU of Money
   | USN of Money
   | XXX of Money
-  | None 
+  | Nothing 
  
 let getValueCurrency t = 
   match t with 
@@ -514,7 +514,7 @@ let getValueCurrency t =
   | XSU m -> ("XSU", m)
   | USN m -> ("USN", m)
   | XXX m -> ("XXX", m)
-  | None -> ("Non", 0.0)
+  | Nothing -> ("Nothing", 0.0)
 
 let getTypeCurrency v = 
   match v with 
@@ -697,5 +697,5 @@ let getTypeCurrency v =
   | ("XSU", m) -> XSU m
   | ("USN", m) -> USN m
   | ("XXX", m) -> XXX m
-  | ("Non", m) -> None
-  | _ -> None
+  | ("Non", m) -> Nothing
+  | _ -> Nothing
