@@ -75,53 +75,16 @@ CREATE TYPE rate AS (
 *)
 
 
-
-// Deal 
-
-type Deal = 
-  | IRS of name : Name 
-  | CRS of name : Name 
-  | FTR of name : Name * numContract : Count 
-  //| CAL of name : Name option * legs : Leg list 
-  //| PUT of name : Name option * legs : Leg list 
-  //| CAP of name : Name option * legs : Leg list 
-  //| CDS of name : Name option * legs : Leg list 
-  //| TRS of name : Name option * legs : Leg list 
-  //| CRD of name : Name option * legs : Leg list 
-  //| SPT of name : Name option * legs : Leg list 
-  //| INF of name : Name option * legs : Leg list 
-  //| TRL of name : Name option * legs : Leg list 
-  //| RTR of name : Name option * legs : Leg list 
-  //| SWT of name : Name option * legs : Leg list 
-  //| CMS of name : Name option * legs : Leg list 
-
-type DealRecord = 
-  { Id : Id option 
-  ; Name : Name
-  ; Type : Name 
-  ; NumContract : Count 
-  ; TradeDate : Date
-  ; EffectDate : Date
-  ; MatureDate : Date
-  ; TerminateDate : Date option
-  ; Memo : Memo option 
-  }
-
-(*
-let makeDeal (d : Deal) : DealRecord =
-  match d with 
-  | IRS (name) -> {Id = Some 12 ; Name = name ; NumContract = 1 ; Memo = "try it!"}
-  | CRS (name) -> {Id = Some 23 ; Name = name ; NumContract = 1 ; Memo = "try it!"}
-  | FTR (name, numContract) -> {Id = Some 34 ; Name = name ; NumContract = 1 ; Memo = "try it!"}
-let mytestdeal = makeDeal <| Deal.CRS (name = "abcd", legs = [myleg ; otherleg])
-*)
-
-
 // Leg
 
 type Leg = 
   | IRSFIX of id : Id option 
-            * dealId : Id 
+            * name : Name
+            * tradeDate : Date
+            * effectDate : Date
+            * matureDate : Date
+            * terminateDate : Date option
+            * numContract : Count 
             * stance : Stance 
             * period : Count 
             * span : Span 
@@ -129,8 +92,14 @@ type Leg =
             * notional : Currency
             * fixedQuote : Quote
             * memo : Memo option 
+(*
   | IRSFLT of id : Id option 
-            * dealId : Id 
+            * name : Name
+            * tradeDate : Date
+            * effectDate : Date
+            * matureDate : Date
+            * terminateDate : Date option
+            * numContract : Count 
             * stance : Stance 
             * period : Count 
             * span : Span 
@@ -138,69 +107,100 @@ type Leg =
             * notional : Currency
             * movingQuote : Quote
             * memo : Memo option 
-  (*
-  | CRSFIX of Id : Id option 
-            * DealId : Id 
-            * Stance : Stance 
-            * Period : Count 
-            * Span : Span 
-            * Day : Day
-            * Notional : Currency
-            * FixedQuote : Quote
-            * Memo : Memo option
-  | CRSFLT of Id : Id option 
-            * DealId : Id 
-            * Stance : Stance 
-            * Period : Count 
-            * Span : Span 
-            * Day : Day
-            * Notional : Currency
-            * MovingQuote : Quote
-            * Memo : Memo option
-   *) 
+*) 
 
-type LegRecord = 
+type LegDbRcd = 
   { Id : Id option 
-  ; Type : Name
-  ; DealId : Id
-  ; Stance : Stance
+  ; Name : Name 
+  ; DealType : Name
+  ; LegType : Name 
+  ; TradeDate : Date
+  ; EffectDate : Date
+  ; MatureDate : Date
+  ; TerminateDate : Date option
+  ; NumContract : Count 
+  ; StanceId : Name
   ; Period : Count 
-  ; Span : Span
-  ; Day : Day
-  ; Notional : Currency
-  ; FixedQuote : Quote option 
-  ; MovingQuote : Quote option 
+  ; SpanId : Name
+  ; DayId : Name
+  ; Notional : (Name * Money)
+  ; FixedQuote : (Name * Rate)
+  ; MovingQuote : (Name * Rate)
   ; Memo : Memo option }
 
-let makeLegRecord (l : Leg) : LegRecord =
+let makeDbRcdFromLeg (l : Leg) : LegDbRcd =
   match l with 
-  | IRSFIX (id, dealId, stance
-          , period, span, day
-          , notional, fixedQuote, memo )-> { Id = id 
-                                           ; Type = "IRSFIX" 
-                                           ; DealId = dealId 
-                                           ; Stance = stance 
-                                           ; Period = period 
-                                           ; Span = span 
-                                           ; Day = day 
-                                           ; Notional = notional 
-                                           ; FixedQuote = Some fixedQuote 
-                                           ; MovingQuote = None 
-                                           ; Memo = memo } 
-  | IRSFLT (id, dealId, stance
-          , period, span, day
-          , notional, movingQuote, memo )-> { Id = id 
-                                            ; Type = "IRSFIX" 
-                                            ; DealId = dealId 
-                                            ; Stance = stance 
-                                            ; Period = period 
-                                            ; Span = span 
-                                            ; Day = day 
-                                            ; Notional = notional 
-                                            ; FixedQuote = None 
-                                            ; MovingQuote = Some movingQuote 
-                                            ; Memo = memo } 
+  | IRSFIX ( id, name, tradeDate, 
+             effectDate, matureDate, 
+             terminateDate, numContract, 
+             stance, period, span, 
+             day, notional, fixedQuote, memo 
+             )-> { Id = id 
+                 ; Name = name 
+                 ; DealType = "IRS"
+                 ; LegType = "IRSFIX"
+                 ; TradeDate = tradeDate
+                 ; EffectDate = effectDate           
+                 ; MatureDate = matureDate
+                 ; TerminateDate = terminateDate
+                 ; NumContract = 1
+                 ; StanceId = getValueStance stance 
+                 ; Period = period 
+                 ; SpanId = getValueSpan span 
+                 ; DayId = getValueDay day 
+                 ; Notional = getValueCurrency notional 
+                 ; FixedQuote = getValueQuote fixedQuote 
+                 ; MovingQuote = ("Nothing", 0.0)
+                 ; Memo = memo }
 
+let makeLegfromDbRcd (r : LegDbRcd) : Leg =
+  match r.LegType with 
+  | "IRSFIX" -> Leg.IRSFIX ( id = r.Id
+                           , name =  r.Name
+                           , tradeDate = r.TradeDate
+                           , effectDate = r.EffectDate
+                           , matureDate = r.MatureDate
+                           , terminateDate = r.TerminateDate
+                           , numContract = r.NumContract
+                           , stance = getTypeStance r.StanceId
+                           , period = r.Period
+                           , span = getTypeSpan r.SpanId 
+                           , day = getTypeDay r.DayId
+                           , notional = getTypeCurrency r.Notional
+                           , fixedQuote = getTypeQuote r.FixedQuote
+                           , memo = r.Memo )
+  | _ -> Leg.IRSFIX        ( id = r.Id
+                           , name =  r.Name
+                           , tradeDate = r.TradeDate
+                           , effectDate = r.EffectDate
+                           , matureDate = r.MatureDate
+                           , terminateDate = r.TerminateDate
+                           , numContract = r.NumContract
+                           , stance = getTypeStance r.StanceId
+                           , period = r.Period
+                           , span = getTypeSpan r.SpanId 
+                           , day = getTypeDay r.DayId
+                           , notional = getTypeCurrency r.Notional
+                           , fixedQuote = getTypeQuote r.FixedQuote
+                           , memo = r.Memo )
+
+let myLeg : Leg = 
+  Leg.IRSFIX ( id = Some 1
+             , name = "abc"
+             , tradeDate = Date(2012,6,8)
+             , effectDate = Date(2012,6,8)
+             , matureDate = Date(2012,6,8)
+             , terminateDate = Some(Date(2012,6,8))
+             , numContract = 1
+             , stance = Stance.Pay
+             , period = 10 
+             , span = Span.Annual
+             , day =  Day.D30360
+             , notional = Currency.USD 120.11
+             , fixedQuote = Quote.Libor1Y 0.0012
+             , memo = Some "abc")
+let myLegDbRcd = makeDbRcdFromLeg myLeg
+let myLegAgain = makeLegfromDbRcd myLegDbRcd
 
 
 // Roll 
