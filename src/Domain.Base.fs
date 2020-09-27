@@ -1,6 +1,6 @@
 [<AutoOpen>]
 
-module Irene.Basis
+module Irene.Domain.Base
 
 type Id = int 
 type Name = string

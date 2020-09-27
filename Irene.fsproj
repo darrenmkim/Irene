@@ -4,17 +4,13 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="src/Basis.fs" />
-    <Compile Include="src/Domain.fs" />
-    <Compile Include="src/Help.fs" />
-    <Compile Include="src/Preset.fs" />
-    <Compile Include="src/Mock.fs" />
-    <Compile Include="src/Port.fs" />
-    <Compile Include="src/Cashflow.fs" />
-    <Compile Include="src/Roll.fs" />
-    <Compile Include="src/Route.fs" />
-    <Compile Include="src/Config.fs" />
-    <Compile Include="src/Server.fs" />
+    <Compile Include="src/Domain.Base.fs" />
+    <Compile Include="src/Domain.Help.fs" />
+    <Compile Include="src/Domain.Quote.fs" />
+    <Compile Include="src/Domain.Leg.fs" />
+    <Compile Include="src/Domain.Roll.fs" />
+    <Compile Include="src/Server.Route.fs" />
+    <Compile Include="src/Server.Build.fs" />
     <Compile Include="src/Main.fs" />
   </ItemGroup>
   <ItemGroup>

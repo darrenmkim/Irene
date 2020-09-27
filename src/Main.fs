@@ -1,3 +1,4 @@
 module Irene.Main
-open Irene.Server
+
+open Irene.Server.Build
 main 1

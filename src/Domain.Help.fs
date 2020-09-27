@@ -1,6 +1,6 @@
 [<AutoOpen>]
 
-module Irene.Func
+module Irene.Domain.Help
 
 // Aliases
 
