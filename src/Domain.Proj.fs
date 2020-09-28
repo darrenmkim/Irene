@@ -16,7 +16,7 @@ type Proj =
 let makeContractProj (d : Deal) (legId : Id) : Proj list =
   let l = d.Leg.[legId]
   match d.Breed with 
-  | Breed.IRS -> 
+  | IRS -> 
          [ { Id = None 
            ; Date = d.TradeDate
            ; DealId = d.Id
@@ -30,13 +30,13 @@ let makeContractProj (d : Deal) (legId : Id) : Proj list =
 
 let makeEffectProj (d : Deal) (legId : Id) : Proj list =
   match d.Breed with 
-  | Breed.IRS -> []
+  | IRS -> []
   | Breed.Nothing -> [] 
 
 let makeInterestProjs (d : Deal) (legId : Id) : Proj list =
   let l = d.Leg.[legId]
   match d.Breed with 
-  | Breed.IRS -> 
+  | IRS -> 
          [ { Id = None 
            ; Date = Date(2020, 2, 2)
            ; DealId = d.Id
@@ -50,7 +50,7 @@ let makeInterestProjs (d : Deal) (legId : Id) : Proj list =
 
 let makeTerminateProj (d : Deal) (legId : Id) : Proj list =
   match d.Breed with 
-  | Breed.IRS -> []
+  | IRS -> []
   | Breed.Nothing -> [] 
 
 let makeProjsForLeg (d : Deal) (legId : Id) : Proj list =
