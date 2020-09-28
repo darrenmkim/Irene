@@ -34,7 +34,6 @@ type LegDb =
   ; MovingQuote : (Name * Rate) option
   ; Memo : string option }
 
-
 let legSchema = 
   "create table if not exists " +
   "Leg (" +
@@ -61,6 +60,7 @@ type Deal =
   ; MatureDate : Date
   ; TerminateDate : Date option
   ; Leg : Leg list
+  ; Active : Active
   ; Memo : Memo option }
 
 type DealDb = 
@@ -73,6 +73,43 @@ type DealDb =
   ; MatureDate : Date
   ; TerminateDate : Date option
   ; Memo : Memo option }
+
+let makeDbRecordFromLeg (l : Leg) : LegDb =
+  let legDb : LegDb = 
+    { Id = l.Id
+    ; Name = l.Name
+    ; DealId = l.Id
+    ; Pact = getPactValueFromType l.Pact
+    ; Stance = getStanceValueFromType l.Stance
+    ; Period = l.Period
+    ; Span = getSpanValueFromType l.Span
+    ; Day = getDayValueFromType l.Day
+    ; ContractNum = l.ContractNum
+    ; Notional = getCurrencyValueFromType l.Notional
+    ; FixedQuote = None
+    ; MovingQuote = None
+    ; Memo = l.Memo }
+  legDb
+
+let makeDbRecordFromDeal (d : Deal) : (DealDb * LegDb list) =
+  let dealDb : DealDb = 
+    { Id = d.Id
+    ; Name = d.Name
+    ; Breed = getBreedValueFromType d.Breed
+    ; Strategy = getStrategyValueFromType d.Strategy
+    ; TradeDate = d.TradeDate
+    ; EffectDate = d.EffectDate
+    ; MatureDate = d.MatureDate
+    ; TerminateDate = d.TerminateDate
+    ; Memo = d.Memo }
+  let legDbs : LegDb list = 
+    lmap makeDbRecordFromLeg d.Leg
+  dealDb, legDbs
+
+
+
+
+////////////////
 
 let sampleDeal : Deal = 
   { Id = Some 1
@@ -107,40 +144,7 @@ let sampleDeal : Deal =
             ; FixedQuote = Some (Quote.Euribor1Y 0.023)
             ; MovingQuote = None 
             ; Memo = Some "my memo" }]
+  ; Active = true
   ; Memo = Some "abc"}
-
-
-let makeDbRecordFromLeg (l : Leg) : LegDb =
-  let legDb : LegDb = 
-    { Id = l.Id
-    ; Name = l.Name
-    ; DealId = l.Id
-    ; Pact = getPactValueFromType l.Pact
-    ; Stance = getStanceValueFromType l.Stance
-    ; Period = l.Period
-    ; Span = getSpanValueFromType l.Span
-    ; Day = getDayValueFromType l.Day
-    ; ContractNum = l.ContractNum
-    ; Notional = getCurrencyValueFromType l.Notional
-    ; FixedQuote = None
-    ; MovingQuote = None
-    ; Memo = l.Memo }
-  legDb
-
-let makeDbRecordFromDeal (d : Deal) : (DealDb * LegDb list) =
-  let dealDb : DealDb = 
-    { Id = d.Id
-    ; Name = d.Name
-    ; Breed = getBreedValueFromType d.Breed
-    ; Strategy = getStrategyValueFromType d.Strategy
-    ; TradeDate = d.TradeDate
-    ; EffectDate = d.EffectDate
-    ; MatureDate = d.MatureDate
-    ; TerminateDate = d.TerminateDate
-    ; Memo = d.Memo }
-  let legDbs : LegDb list = 
-    lmap makeDbRecordFromLeg d.Leg
-  let tuple = dealDb, legDbs
-  tuple 
 
 let testDealDb = makeDbRecordFromDeal sampleDeal

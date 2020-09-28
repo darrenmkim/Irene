@@ -11,6 +11,8 @@ type Rate = float
 type Percent = float
 type Date = System.DateTime
 type Time = System.DateTime
+type Active = bool
+type Actual = bool
  
 
 // Ability 
@@ -65,6 +67,35 @@ let getStanceTypeFromValue v =
   | _ -> Nothing
 
 
+// Event 
+
+type Event = 
+  | Contract 
+  | Effect
+  | Interest
+  | Reduce
+  | Terminate
+  | Nothing 
+
+let getEventValueFromType a = 
+  match a with 
+  | Contract -> "Contract"
+  | Effect -> "Effect"
+  | Interest -> "Interest"
+  | Reduce -> "Reduce"
+  | Terminate -> "Terminate"
+  | Nothing -> "Nothing"
+
+let getEventTypeFromValue v = 
+  match v with 
+  | "Contract" -> Contract
+  | "Effect" -> Effect
+  | "Interest" -> Interest
+  | "Reduce" -> Reduce
+  | "Terminate"-> Terminate
+  | "Nothing" -> Nothing
+  | _ -> Nothing
+
 // Span 
 
 type Span = 
@@ -104,8 +135,6 @@ type Status =
   | Posted
   | Drafted
   | Deleted
-  | Activated
-  | Deactivated 
   | Nothing
   
 let getStatusValueFromType t = 
@@ -113,8 +142,6 @@ let getStatusValueFromType t =
   | Posted -> "Posted"
   | Drafted -> "Drafted"
   | Deleted -> "Deleted"
-  | Activated -> "Activated"
-  | Deactivated -> "Deactivated"
   | Nothing -> "Nothing"
 
 let getStatusTypeFromValue v = 
@@ -122,8 +149,6 @@ let getStatusTypeFromValue v =
   | "Posted" -> Posted
   | "Drafted" -> Drafted
   | "Deleted" -> Deleted
-  | "Activated" -> Activated
-  | "Deactivated" -> Deactivated
   | "Nothing" -> Nothing
   | _ -> Nothing
 
