@@ -157,6 +157,65 @@ type Hedge =
   | HNIFO // Hedges of net investment in foreign operations
 
 
+// Pact 
+
+type Pact = 
+  | IRSFIX
+  | IRSFLT
+  | Nothing 
+
+let getPactValueFromType t = 
+  match t with 
+  | IRSFIX -> "IRSFIX"
+  | IRSFLT -> "IRSFLT"
+  | Nothing -> "Nothing"
+
+let getPactTypeFromValue v = 
+  match v with 
+  | "IRSFIX" -> IRSFIX
+  | "IRSFLT" -> IRSFLT
+  | "Nothing" -> Nothing
+  | _ -> Nothing
+
+
+// Breed 
+
+type Breed = 
+  | IRS 
+  | Nothing
+
+let getBreedValueFromType t = 
+  match t with 
+  | IRS -> "IRS"
+  | Nothing -> "Nothing"
+
+let getBreedTypeFromValue v = 
+  match v with 
+  | "IRS" -> IRS
+  | "Nothing" -> Nothing
+  | _ -> Nothing
+
+
+// Strategry 
+
+type Strategy =
+  | FVHIRS
+  | CFHIRS
+  | Nothing
+
+let getStrategyValueFromType t = 
+  match t with 
+  | FVHIRS -> "FVHIRS"
+  | CFHIRS -> "CFHIRS"
+  | Nothing -> "Nothing"
+
+let getStrategyTypeFromValue v = 
+  match v with 
+  | "FVHIRS" -> FVHIRS
+  | "CFHIRS" -> CFHIRS
+  | "Nothing" -> Nothing
+  | _ -> Nothing
+
 
 // Currency 
 

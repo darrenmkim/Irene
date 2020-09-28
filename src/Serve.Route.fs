@@ -1,4 +1,4 @@
-module Irene.Server.Route
+module Irene.Serve.Route
 
 open Microsoft.AspNetCore.Http
 open Giraffe

@@ -1,11 +1,11 @@
-module Irene.Server.Build 
+module Irene.Serve.Build 
 
 open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.Hosting
 open Microsoft.AspNetCore.Builder
 open Microsoft.Extensions.DependencyInjection
 open Giraffe
-open Irene.Server.Route
+open Irene.Serve.Route
 
 let configureApp (app : IApplicationBuilder) =
     // Add Giraffe to the ASP.NET Core pipeline

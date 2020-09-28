@@ -25,7 +25,7 @@ type Quote =
   | Euribor1Y of Rate 
   | Nothing   
 
-let getValueQuote (a : Quote) : (Name * Rate) =
+let getQuoteValueFromType (a : Quote) : (Name * Rate) =
   match a with 
   | Fixed -> ("Fixed", 0.0)
   | Libor1D r -> ("Libor1D", r) 
@@ -46,7 +46,7 @@ let getValueQuote (a : Quote) : (Name * Rate) =
   | Euribor1Y r -> ("Euribor1Y", r) 
   | Nothing -> ("Nothing", 0.0)
 
-let getTypeQuote (value : (Name * Rate)) : Quote =
+let getQuoteTypeFromValue (value : (Name * Rate)) : Quote =
   match value with 
   | ("Fixed", r) -> Fixed
   | ("Libor1D", r) -> Libor1D r 
@@ -73,36 +73,3 @@ CREATE TYPE rate AS (
     code text,
     value numeric);
 *)
-
-
-
-// Roll 
-
-
-
-// Proj
-
-type Proj = 
-  | Contract of tradeDate:Date * notionalLocal:Money * numContract:Count 
-  | Effect of feeRate:Rate * notionalLocal:Money * numContract:Count 
-  | Interest 
-  | Accrue 
-  | Valuate 
-  | Reduce of feeRate : Rate option
-  | Terminate of feeRate:Rate option 
-  | Mature 
-
-
-
-(*
-CREATE TYPE currency AS (
-    code text,
-    value decimal(20,2));
-*)
-
-
-// Tran 
-
-
-
-// Journal
