@@ -22,7 +22,7 @@ type Ability =
   | Viewer
   | Nothing 
 
-let getValueAbility a = 
+let getAbilityValueFromType a = 
   match a with 
   | Admin -> "Admin"
   | Approver -> "Approver"
@@ -30,7 +30,7 @@ let getValueAbility a =
   | Viewer -> "Viewer"
   | Nothing -> "Nothing"
 
-let getTypeAbility v = 
+let getAbilityTypeFromValue v = 
   match v with 
   | "Admin" -> Admin
   | "Approver" -> Approver
@@ -48,7 +48,7 @@ type Stance =
   | Sell
   | Nothing 
 
-let getValueStance a = 
+let getStanceValueFromType a = 
   match a with 
   | Pay -> "Pay"
   | Receive -> "Receive"
@@ -56,7 +56,7 @@ let getValueStance a =
   | Sell -> "Sell"
   | Nothing -> "Nothing"
 
-let getTypeStance v = 
+let getStanceTypeFromValue v = 
   match v with 
   | "Pay" -> Pay
   | "Receive" -> Receive
@@ -76,7 +76,7 @@ type Span =
   | Biannual
   | Nothing
 
-let getValueSpan t = 
+let getSpanValueFromType t = 
   match t with 
   | Continuous -> "Continuous"
   | Month -> "Month"
@@ -86,7 +86,7 @@ let getValueSpan t =
   | Biannual -> "Biannual"
   | Nothing -> "Nothing"
 
-let getTypeSpan v = 
+let getSpanTypeFromValue v = 
   match v with 
   | "Continuous" -> Continuous
   | "Month" -> Month
@@ -108,7 +108,7 @@ type Status =
   | Deactivated 
   | Nothing
   
-let getValueStatus t = 
+let getStatusValueFromType t = 
   match t with 
   | Posted -> "Posted"
   | Drafted -> "Drafted"
@@ -117,7 +117,7 @@ let getValueStatus t =
   | Deactivated -> "Deactivated"
   | Nothing -> "Nothing"
 
-let getTypeStatus v = 
+let getStatusTypeFromValue v = 
   match v with 
   | "Posted" -> Posted
   | "Drafted" -> Drafted
@@ -135,18 +135,27 @@ type Day =
   | DAC360
   | Nothing
 
-let getValueDay t = 
+let getDayValueFromType t = 
   match t with 
   | D30360 -> "30360"
   | DAC360 -> "AC360"
   | Nothing -> "Nothing"
 
-let getTypeDay v = 
+let getDayTypeFromValue v = 
   match v with 
   | "30360" -> D30360
   | "AC360" -> DAC360
   | "Nothing" -> Nothing
   | _ -> Nothing
+
+
+// Hedge
+
+type Hedge = 
+  | FVH // Fair value hedges
+  | CFH // Cash flow hedges
+  | HNIFO // Hedges of net investment in foreign operations
+
 
 
 // Currency 
@@ -333,7 +342,7 @@ type Currency =
   | XXX of Money
   | Nothing 
  
-let getValueCurrency t = 
+let getCurrencyValueFromType t = 
   match t with 
   | ALL m -> ("ALL", m)
   | DZD m -> ("DZD", m)
@@ -516,7 +525,7 @@ let getValueCurrency t =
   | XXX m -> ("XXX", m)
   | Nothing -> ("Nothing", 0.0)
 
-let getTypeCurrency v = 
+let getCurrencyTypeFromValue v = 
   match v with 
   | ("ALL", m) -> ALL m
   | ("DZD", m) -> DZD m
