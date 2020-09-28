@@ -8,6 +8,10 @@ type Proj =
   ; DealId : Id option 
   ; LegId : Id option 
   ; Event : Event
+  ; PeriodStart : Date option
+  ; PeriodEnd : Date option 
+  ; DaysInPeriod : Count option
+  ; RateQuote : Quote option 
   ; Notional : Currency 
   ; Amount : Currency
   ; Actual : Actual
@@ -17,15 +21,19 @@ let makeContractProj (d : Deal) (legId : Id) : Proj list =
   let l = d.Leg.[legId]
   match d.Breed with 
   | IRS -> 
-         [ { Id = None 
-           ; Date = d.TradeDate
-           ; DealId = d.Id
-           ; LegId = d.Id
-           ; Event = Event.Contract
-           ; Notional = l.Notional 
-           ; Amount = l.Notional 
-           ; Actual = true 
-           } ]
+         [{ Id = None 
+          ; Date = d.TradeDate
+          ; DealId = d.Id
+          ; LegId = d.Id
+          ; Event = Event.Contract
+          ; PeriodStart = None 
+          ; PeriodEnd = None
+          ; DaysInPeriod = None
+          ; RateQuote = None
+          ; Notional = l.Notional 
+          ; Amount = l.Notional 
+          ; Actual = true 
+          } ]
   | Breed.Nothing -> []
 
 let makeEffectProj (d : Deal) (legId : Id) : Proj list =
@@ -33,19 +41,37 @@ let makeEffectProj (d : Deal) (legId : Id) : Proj list =
   | IRS -> []
   | Breed.Nothing -> [] 
 
+let rec makeInterestProjsIrs 
+  (d : Deal) (legId : Id) (periodFirstDay : Date) : Proj list =
+  let l = d.Leg.[legId]
+  let spanInMonths = (getMonthsBySpan l.Span)
+  let periodLastDay = addMonths periodFirstDay spanInMonths
+  if periodLastDay >= d.MatureDate then []
+  else 
+        let quote = Some (Quote.Libor1Y 0.025)
+        let interestAmount = 
+          getCurrencyTypeFromValue ((fst (getCurrencyValueFromType l.Notional)), 
+                                    (snd (getCurrencyValueFromType l.Notional)) * 
+                                    (snd (getQuoteValueFromType quote.Value)) * 
+                                    ((float spanInMonths) / 12.0))
+        [{ Id = None 
+        ; Date = Date(2020, 2, 2)
+        ; DealId = d.Id
+        ; LegId = d.Id
+        ; Event = Event.Interest
+        ; PeriodStart = Some periodFirstDay 
+        ; PeriodEnd = Some periodLastDay
+        ; DaysInPeriod = Some ((periodLastDay - periodFirstDay).Days)
+        ; RateQuote = quote
+        ; Notional = l.Notional 
+        ; Amount = interestAmount
+        ; Actual = true 
+        }] @ makeInterestProjsIrs d legId periodLastDay
+
 let makeInterestProjs (d : Deal) (legId : Id) : Proj list =
   let l = d.Leg.[legId]
   match d.Breed with 
-  | IRS -> 
-         [ { Id = None 
-           ; Date = Date(2020, 2, 2)
-           ; DealId = d.Id
-           ; LegId = d.Id
-           ; Event = Event.Interest
-           ; Notional = l.Notional 
-           ; Amount = l.Notional 
-           ; Actual = true 
-           } ]
+  | IRS -> makeInterestProjsIrs d legId d.EffectDate
   | Breed.Nothing -> [] 
 
 let makeTerminateProj (d : Deal) (legId : Id) : Proj list =

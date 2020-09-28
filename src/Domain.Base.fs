@@ -128,6 +128,16 @@ let getSpanTypeFromValue v =
   | "Nothing" -> Nothing
   | _ -> Nothing
 
+let getMonthsBySpan (s : Span) : Count =
+  match s with 
+  | Continuous -> 0
+  | Month -> 1
+  | Quarter -> 3
+  | Semiannual -> 6
+  | Annual -> 12
+  | Biannual -> 24
+  | Nothing -> 0
+
 
 // Status
 

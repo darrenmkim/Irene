@@ -116,10 +116,10 @@ let sampleDeal : Deal =
   ; Name = "sampleDeal"
   ; Breed = Breed.IRS
   ; Strategy = Strategy.FVHIRS
-  ; TradeDate = Date(2020, 1, 1)
-  ; EffectDate = Date(2020, 1, 1)
-  ; MatureDate = Date(2020, 1, 1)
-  ; TerminateDate = Some(Date(2020, 1, 1))
+  ; TradeDate = Date(2011, 1, 1)
+  ; EffectDate = Date(2011, 1, 3)
+  ; MatureDate = Date(2020, 1, 3)
+  ; TerminateDate = None
   ; Leg = [{ Id = Some 1
             ; Name = "my leg 1"
             ; Pact = Pact.IRSFIX
