@@ -2,6 +2,9 @@
 
 module Irene.Domain.Quote
 
+open Fed.Fred 
+// #r "/home/drnmk/Documents/irene/bin/Debug/netcoreapp3.1/Fed.Fred.dll" 
+
 
 // Quote 
 
@@ -68,8 +71,27 @@ let getQuoteTypeFromValue (value : (Name * Rate)) : Quote =
   | ("Nothing", r) -> Nothing 
   | _ -> Nothing 
 
+
+
+
+
+
+// monadss
+let fredApiKey = "d9f839ac26eb80f8a42efe6e07c4e1a6"
+
+
 (*
 CREATE TYPE rate AS (
     code text,
     value numeric);
 *)
+
+let fred = Fred(fredApiKey)
+let realse = fred.GetCategory(2)
+
+// The library does not cache calls from the FRED database. You can change cache option.
+
+// var fred = new Fred("api key", RequestCacheLevel.BypassCache); //Default Option
+
+
+// /home/drnmk/Documents/irene/bin/Debug/netcoreapp3.1/Dapper.FSharp.dll
