@@ -5,20 +5,8 @@ open Dapper.FSharp.PostgreSQL
 
 // Leg
 
-type Leg = 
-  { Id : Id option 
-  ; Name : Name 
-  ; Pact : Pact
-  ; Stance : Stance
-  ; Period : Count 
-  ; Span : Span
-  ; Day : Day
-  ; ContractNum : Count 
-  ; Notional : Currency
-  ; FixedQuote : Quote option 
-  ; MovingQuote : Quote option 
-  ; Memo : Memo option }
 
+(*
 type LegDb = 
   { Id : Id option 
   ; Name : Name  
@@ -50,18 +38,6 @@ let legSchema =
   "MovingQuote int not null, " +
   "Memo text) " 
 
-type Deal = 
-  { Id : Id option 
-  ; Name : Name 
-  ; Breed : Breed
-  ; Strategy : Strategy
-  ; TradeDate : Date
-  ; EffectDate : Date
-  ; MatureDate : Date
-  ; TerminateDate : Date option
-  ; Leg : Leg list
-  ; Active : Active
-  ; Memo : Memo option }
 
 type DealDb = 
   { Id : Id option 
@@ -73,7 +49,8 @@ type DealDb =
   ; MatureDate : Date
   ; TerminateDate : Date option
   ; Memo : Memo option }
-
+*)
+(*
 let makeDbRecordFromLeg (l : Leg) : LegDb =
   let legDb : LegDb = 
     { Id = l.Id
@@ -106,45 +83,47 @@ let makeDbRecordFromDeal (d : Deal) : (DealDb * LegDb list) =
     lmap makeDbRecordFromLeg d.Leg
   dealDb, legDbs
 
-
+*)
 
 
 ////////////////
 
 let sampleDeal : Deal = 
-  { Id = Some 1
+  { Id = 1u
   ; Name = "sampleDeal"
   ; Breed = Breed.IRS
   ; Strategy = Strategy.FVHIRS
   ; TradeDate = Date(2011, 1, 1)
   ; EffectDate = Date(2011, 1, 3)
   ; MatureDate = Date(2020, 1, 3)
-  ; TerminateDate = None
-  ; Leg = [{ Id = Some 1
+  ; TerminateDate = Date(2020, 1, 3)
+  ; Leg = [{ Id = 1u
             ; Name = "my leg 1"
             ; Pact = Pact.IRSFIX
             ; Stance = Stance.Pay
-            ; Period = 10
+            ; Period = 10us
             ; Span = Span.Annual
             ; Day = Day.D30360
-            ; ContractNum = 1
-            ; Notional = Currency.EUR 1000000.0
-            ; FixedQuote = Some (Quote.Euribor1Y 0.023)
-            ; MovingQuote = None 
-            ; Memo = Some "my memo" } ; 
-            { Id = Some 2
+            ; ContractNum = 1uy
+            ; Notional = { Currency = Currency.EUR 
+                         ; Number = 1000000.0 }
+            ; FixedQuote = { Ticker = Ticker.Libor1Y
+                           ; Number = 0.023 }
+            ; MovingTicker = Ticker.None 
+            ; Memo = "my memo" } ; 
+            { Id = 2u
             ; Name = "my leg 2"
             ; Pact = Pact.IRSFLT
             ; Stance = Stance.Receive
-            ; Period = 10
+            ; Period = 10us
             ; Span = Span.Annual
             ; Day = Day.D30360
-            ; ContractNum = 1
-            ; Notional = Currency.EUR 1000000.0
-            ; FixedQuote = Some (Quote.Euribor1Y 0.023)
-            ; MovingQuote = None 
-            ; Memo = Some "my memo" }]
+            ; ContractNum = 1uy
+            ; Notional = { Currency = Currency.EUR 
+                         ; Number = 1000000.0 }
+            ; FixedQuote = { Ticker = Ticker.Euribor1Y 
+                           ; Number = 0.023 }
+            ; MovingTicker = Ticker.None
+            ; Memo = "my memo" }]
   ; Active = true
-  ; Memo = Some "abc"}
-
-let testDealDb = makeDbRecordFromDeal sampleDeal
+  ; Memo = "abc"}

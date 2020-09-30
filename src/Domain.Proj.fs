@@ -2,21 +2,8 @@ module Irene.Domain.Proj
 
 open Irene.Domain.Deal
 
-type Proj = 
-  { Id : Id option 
-  ; Date : Date 
-  ; DealId : Id option 
-  ; LegId : Id option 
-  ; Event : Event
-  ; PeriodStart : Date option
-  ; PeriodEnd : Date option 
-  ; DaysInPeriod : Count option
-  ; RateQuote : Quote option 
-  ; Notional : Currency 
-  ; Amount : Currency
-  ; Actual : Actual
-  }
 
+(*
 let makeContractProj (d : Deal) (legId : Id) : Proj list =
   let l = d.Leg.[legId]
   match d.Breed with 
@@ -95,3 +82,4 @@ let makeProjsForDeal (d : Deal) : Proj list =
   combineProjs d 0
 
 let testproj = makeProjsForDeal sampleDeal
+*)
