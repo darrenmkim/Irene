@@ -1,28 +1,11 @@
 module Irene.Domain.Deal
 
-open Dapper.FSharp
-open Dapper.FSharp.PostgreSQL
+open System
+open Npgsql // #r "/home/drnmk/Documents/irene/bin/Debug/netcoreapp3.1/Npgsql.dll";; 
 
 // Leg
 
-
-(*
-type LegDb = 
-  { Id : Id option 
-  ; Name : Name  
-  ; DealId : Id option
-  ; Pact : Name
-  ; Stance : Name
-  ; Period : Count  
-  ; Span : Name
-  ; Day : Name
-  ; ContractNum : Count 
-  ; Notional : (Name * Money)
-  ; FixedQuote : (Name * Rate) option
-  ; MovingQuote : (Name * Rate) option
-  ; Memo : string option }
-
-let legSchema = 
+let legSql = 
   "create table if not exists " +
   "Leg (" +
   "Id serial primary key, " +
@@ -39,64 +22,16 @@ let legSchema =
   "Memo text) " 
 
 
-type DealDb = 
-  { Id : Id option 
-  ; Name : Name 
-  ; Breed : Name
-  ; Strategy : Name
-  ; TradeDate : Date
-  ; EffectDate : Date
-  ; MatureDate : Date
-  ; TerminateDate : Date option
-  ; Memo : Memo option }
-*)
-(*
-let makeDbRecordFromLeg (l : Leg) : LegDb =
-  let legDb : LegDb = 
-    { Id = l.Id
-    ; Name = l.Name
-    ; DealId = l.Id
-    ; Pact = getPactValueFromType l.Pact
-    ; Stance = getStanceValueFromType l.Stance
-    ; Period = l.Period
-    ; Span = getSpanValueFromType l.Span
-    ; Day = getDayValueFromType l.Day
-    ; ContractNum = l.ContractNum
-    ; Notional = getCurrencyValueFromType l.Notional
-    ; FixedQuote = None
-    ; MovingQuote = None
-    ; Memo = l.Memo }
-  legDb
-
-let makeDbRecordFromDeal (d : Deal) : (DealDb * LegDb list) =
-  let dealDb : DealDb = 
-    { Id = d.Id
-    ; Name = d.Name
-    ; Breed = getBreedValueFromType d.Breed
-    ; Strategy = getStrategyValueFromType d.Strategy
-    ; TradeDate = d.TradeDate
-    ; EffectDate = d.EffectDate
-    ; MatureDate = d.MatureDate
-    ; TerminateDate = d.TerminateDate
-    ; Memo = d.Memo }
-  let legDbs : LegDb list = 
-    lmap makeDbRecordFromLeg d.Leg
-  dealDb, legDbs
-
-*)
-
-
-////////////////
 
 let sampleDeal : Deal = 
   { Id = 1u
   ; Name = "sampleDeal"
   ; Breed = Breed.IRS
   ; Strategy = Strategy.FVHIRS
-  ; TradeDate = Date(2011, 1, 1)
-  ; EffectDate = Date(2011, 1, 3)
-  ; MatureDate = Date(2020, 1, 3)
-  ; TerminateDate = Date(2020, 1, 3)
+  ; TradeDate = DateTime(2011, 1, 1)
+  ; EffectDate = DateTime(2011, 1, 3)
+  ; MatureDate = DateTime(2020, 1, 3)
+  ; TerminateDate = DateTime(2020, 1, 3)
   ; Leg = [{ Id = 1u
             ; Name = "my leg 1"
             ; Pact = Pact.IRSFIX
@@ -127,3 +62,28 @@ let sampleDeal : Deal =
             ; Memo = "my memo" }]
   ; Active = true
   ; Memo = "abc"}
+
+
+
+
+type Meat = 
+  | Chicken 
+  | Beef 
+type Fruit = 
+  | Apple
+  | Orange 
+type Lunch = 
+  { Meat : Meat 
+  ; Fruit : Fruit }
+
+let mine = 
+  { Meat = Meat.Chicken
+  ; Fruit = Fruit.Orange }
+
+let sql 
+  = "create table if not exists " 
+  + "lunch (" 
+  + "id serial primary key, " 
+  + "meat text, "
+  + "fruit text)"
+

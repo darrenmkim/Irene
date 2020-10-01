@@ -6,7 +6,6 @@
   <ItemGroup>
     <Compile Include="src/Store.Db.fs" />
     <Compile Include="src/Domain.Base.fs" />
-    <Compile Include="src/Domain.Help.fs" />
     <Compile Include="src/Domain.Quote.fs" />
     <Compile Include="src/Domain.Deal.fs" />
     <Compile Include="src/Domain.Roll.fs" />
@@ -18,11 +17,8 @@
   <ItemGroup>
     <PackageReference Include="Giraffe" Version="4.1.*" />
     <PackageReference Include="TaskBuilder.fs" Version="2.1.*" />
+    <PackageReference Include="Npgsql" Version="5.0.0-alpha1" />
     <PackageReference Include="FSharp.Data" Version="3.3.3" />
-    <PackageReference Include="Dapper" Version="2.0.35" />
-    <PackageReference Include="Dapper.FSharp" Version="1.12.2" />
-    <PackageReference Include="FSharp.Data.Dapper" Version="2.0.0" />
     <PackageReference Include="Thoth.Fetch" Version="2.0.0" />
-    <PackageReference Include="Fed.Fred" Version="1.0.3" />
   </ItemGroup>
 </Project>
