@@ -21,9 +21,7 @@ let legSql =
   "MovingQuote int not null, " +
   "Memo text) " 
 
-
-
-let sampleDeal : Deal = 
+let sampleDeal : DealIn = 
   { Id = 1u
   ; Name = "sampleDeal"
   ; Breed = Breed.IRS

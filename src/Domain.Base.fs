@@ -147,7 +147,7 @@ type Money =
   { Currency : Currency
   ; Number : float }
 
-type Leg = 
+type LegIn = 
   { Id : uint32
   ; Name : string  
   ; Pact : Pact
@@ -161,7 +161,7 @@ type Leg =
   ; MovingTicker : Ticker  
   ; Memo : string }
 
-type Deal = 
+type DealIn = 
   { Id : uint32 
   ; Name : string 
   ; Breed : Breed
@@ -170,7 +170,7 @@ type Deal =
   ; EffectDate : DateTime
   ; MatureDate : DateTime
   ; TerminateDate : DateTime
-  ; Leg : Leg list
+  ; Leg : LegIn list
   ; Active : bool
   ; Memo : string }
 
