@@ -2,7 +2,7 @@
 
 module Irene.Domain.Quote
 
-
+(*
 open System
 open System.Net
 open FSharp.Data
@@ -58,4 +58,4 @@ CREATE TYPE rate AS (
 let getBookById () =
   let url = fredSp500Api
   Fetch.get(url) // decoder = Book.Decoder
-   
+ *)

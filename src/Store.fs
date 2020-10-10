@@ -1,4 +1,4 @@
-module Irene.Store.Db 
+module Irene.Store 
 
 (*  
 get into postgres environment: 
@@ -33,7 +33,6 @@ Shall the new role be a superuser? (y/n) y
 Create database:
 [postgres]$ createdb -O irenedb
 
-*)
 
 open System
 open Npgsql // #r "/home/drnmk/Documents/irene/bin/Debug/netcoreapp3.1/Npgsql.dll";; 
@@ -74,4 +73,5 @@ let read = query "select * from lunch;"
                         rdr.GetInt32(2));
             }
 
+*)
 *)

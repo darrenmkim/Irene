@@ -1,5 +1,6 @@
 module Irene.Domain.Deal
 
+(*
 open System
 open Npgsql // #r "/home/drnmk/Documents/irene/bin/Debug/netcoreapp3.1/Npgsql.dll";; 
 
@@ -85,3 +86,4 @@ let sql
   + "meat text, "
   + "fruit text)"
 
+*)

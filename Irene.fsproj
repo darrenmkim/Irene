@@ -5,7 +5,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src/Store.Db.fs" />
-    <Compile Include="src/Domain.Base.fs" />
+    <Compile Include="src/Help.fs" />
+    <Compile Include="src/Domain.fs" />
     <Compile Include="src/Domain.Quote.fs" />
     <Compile Include="src/Domain.Deal.fs" />
     <Compile Include="src/Domain.Roll.fs" />
